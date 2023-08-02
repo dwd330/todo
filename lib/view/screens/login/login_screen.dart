@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
+import '../../widgets/text_input.dart';
 import 'login_form.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -7,30 +9,41 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBodyBehindAppBar: true,
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Stack(
-            children: <Widget>[
-              Container(
-                decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    Color.fromARGB(255, 231, 237, 190),
-                    Color.fromARGB(223, 47, 178, 229)
-                  ],
-                )),
+        body: SafeArea(
+      child: SingleChildScrollView(
+          child: Container(
+        width: 100.w,
+        height: 100.h,
+        padding: EdgeInsets.only(top: 10.h),
+        decoration: const BoxDecoration(
+            gradient: LinearGradient(
+          begin: Alignment.topRight,
+          end: Alignment.topLeft,
+          colors: [
+            Color.fromARGB(255, 231, 198, 227),
+            Color.fromARGB(105, 240, 225, 244),
+            Color.fromARGB(155, 193, 226, 238)
+          ],
+        )),
+        child: Padding(
+          padding: EdgeInsets.only(top: 5.h),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Expanded(
+                flex: 1,
+                child: TextInput(
+                    fontSize: 24.sp,
+                    fontWeight: FontWeight.bold,
+                    text: " login",
+                    color: Colors.black),
               ),
-              Container(
-                margin: const EdgeInsets.only(top: 270),
-                child: LoginForm(),
-              )
+              Expanded(flex: 6, child: LoginForm()),
             ],
           ),
         ),
-      ),
-    );
+      )),
+    ));
   }
 }

@@ -4,11 +4,10 @@ import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 import 'package:todo/database/local_DB/collections/todo.dart';
 
-import '../../../database/remote/http_handler.dart';
 import '../../../logic/controllers/main_controller.dart';
 import '../../../routes/routes.dart';
 import '../../../utils/theme.dart';
-import '../../widgets/button.dart';
+import '../../widgets/text_input.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({Key? key}) : super(key: key);
@@ -30,76 +29,135 @@ class _LoginFormState extends State<LoginForm> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: SizedBox(
-        width: 50.w,
+      child: Container(
+        decoration: BoxDecoration(
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 5,
+                blurRadius: 7,
+                offset: const Offset(0, 3), // changes position of shadow
+              ),
+            ],
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(30.sp),
+                topRight: Radius.circular(30.sp))),
+        padding: EdgeInsets.all(8.sp),
+        height: 70.h,
         child: Form(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            // key: _formKey,
+            mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               SizedBox(
+                height: 4.h,
+              ),
+              Padding(
+                padding: EdgeInsets.only(
+                  left: 5.w,
+                ),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: TextInput(
+                      fontSize: 15.sp,
+                      fontWeight: FontWeight.normal,
+                      text: "email *",
+                      color: Colors.black),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.all(15.sp),
+                child: TextFormField(
+                  controller: _username,
+                  style: TextStyle(
+                    fontSize: 12.sp,
+                    color: Colors.black,
+                  ),
+                  autofocus: false,
+                  decoration: InputDecoration(
+                    hintText: "enter your email",
+                    floatingLabelBehavior: FloatingLabelBehavior.always,
+                    labelStyle: TextStyle(
+                      fontSize: 10.sp,
+                      color: kCOlor2,
+                    ),
+                    filled: true,
+                    fillColor: Color.fromARGB(156, 234, 232, 232),
+                    contentPadding:
+                        EdgeInsets.only(left: 5.w, bottom: 3.h, top: 3.h),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide.none,
+                      borderRadius: BorderRadius.circular(15.sp),
+                    ),
+                  ),
+                  keyboardType: TextInputType.emailAddress,
+                  autocorrect: true,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Your password';
+                    }
+                    return null;
+                  },
+                ),
+              ),
+              SizedBox(
                 height: 2.h,
               ),
-              TextFormField(
-                controller: _username,
-                style: TextStyle(
-                  fontSize: 12.sp,
-                  color: Colors.black,
+              Padding(
+                padding: EdgeInsets.only(
+                  left: 5.w,
                 ),
-                decoration: InputDecoration(
-                    floatingLabelBehavior: FloatingLabelBehavior.auto,
-                    icon: const Icon(
-                      Icons.person,
-                      color: kCOlor2,
-                    ),
-                    labelText: "اسم المستخدم",
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: TextInput(
+                      fontSize: 15.sp,
+                      fontWeight: FontWeight.normal,
+                      text: "Password *",
+                      color: Colors.black),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.all(15.sp),
+                child: TextFormField(
+                  controller: _passwordController,
+                  style: TextStyle(
+                    fontSize: 14.sp,
+                    color: Colors.black,
+                  ),
+                  autofocus: false,
+                  decoration: InputDecoration(
+                    hintText: "enter your password",
+                    floatingLabelBehavior: FloatingLabelBehavior.always,
                     labelStyle: TextStyle(
-                      fontSize: 10.sp,
+                      fontSize: 14.sp,
                       color: kCOlor2,
                     ),
                     filled: true,
-                    fillColor: Colors.white54),
-                keyboardType: TextInputType.emailAddress,
-                autocorrect: false,
-                validator: (_) {
-                  return null;
-                },
+                    fillColor: Color.fromARGB(156, 234, 232, 232),
+                    contentPadding:
+                        EdgeInsets.only(left: 5.w, bottom: 3.h, top: 3.h),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide.none,
+                      borderRadius: BorderRadius.circular(15.sp),
+                    ),
+                  ),
+                  obscureText: true,
+                  autocorrect: false,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Your password';
+                    }
+                    return null;
+                  },
+                ),
               ),
               SizedBox(
                 height: 3.h,
               ),
-              TextFormField(
-                controller: _passwordController,
-                style: TextStyle(
-                  fontSize: 10.sp,
-                  color: Colors.black,
-                ),
-                decoration: InputDecoration(
-                    floatingLabelBehavior: FloatingLabelBehavior.auto,
-                    icon: const Icon(
-                      Icons.lock,
-                      color: kCOlor2,
-                    ),
-                    labelText: "كلمة المرور",
-                    labelStyle: TextStyle(
-                      fontSize: 10.sp,
-                      color: kCOlor2,
-                    ),
-                    filled: true,
-                    fillColor: Colors.white54),
-                obscureText: true,
-                autocorrect: false,
-                validator: (_) {
-                  return null;
-                },
-              ),
-              SizedBox(
-                height: 3.h,
-              ),
-              AppButton(
-                width: 180,
-                height: 70,
-                onPressed: () async {
+              InkWell(
+                onTap: () async {
                   //test get all users
                   //   final userslist = await HttpHandler().getusers();
                   final todo = Todo()
@@ -123,8 +181,8 @@ class _LoginFormState extends State<LoginForm> {
                     Get.offAllNamed(Routes.mainscreen);
                   } else {
                     Get.snackbar(
-                      "خطاء",
-                      "اسم المستخدم أو كلمة المرور غير صحيحة",
+                      "error",
+                      "incorrect email or passowrd,please try again",
                       backgroundColor: Colors.red,
                       colorText: Colors.white,
                       snackPosition: SnackPosition.BOTTOM,
@@ -132,7 +190,28 @@ class _LoginFormState extends State<LoginForm> {
                     );
                   }
                 },
-                textvalue: "دخول",
+                child: Container(
+                  width: 77.w,
+                  height: 8.h,
+                  decoration: const BoxDecoration(
+                      shape: BoxShape.rectangle,
+                      borderRadius: BorderRadius.all(Radius.circular(25)),
+                      gradient: LinearGradient(
+                        begin: Alignment.topRight,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Color.fromARGB(157, 61, 205, 253),
+                          Color.fromARGB(224, 7, 76, 237),
+                        ],
+                      )),
+                  child: Center(
+                    child: TextInput(
+                        fontSize: 15.sp,
+                        fontWeight: FontWeight.bold,
+                        text: " sign in",
+                        color: Colors.white),
+                  ),
+                ),
               ),
             ],
           ),

@@ -10,6 +10,7 @@ final ButtonStyle style2 = ElevatedButton.styleFrom(
     backgroundColor: const Color.fromARGB(255, 163, 104, 83),
     textStyle: const TextStyle(fontSize: 33));
 final ButtonStyle style3 = ElevatedButton.styleFrom(
+  elevation: 0,
   foregroundColor: Colors.white,
   backgroundColor: const Color.fromARGB(221, 19, 119, 213),
 );
