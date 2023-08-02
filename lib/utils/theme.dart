@@ -15,7 +15,12 @@ const Color kCOlor7 = Color.fromARGB(202, 209, 224, 228);
 const kPrimaryColor = Color.fromARGB(255, 27, 5, 124);
 const inactiveColor = Color(0xFFb36365);
 const bgcolorlite = Color.fromARGB(132, 241, 244, 245);
+final ButtonStyle style1 = ElevatedButton.styleFrom(
+    foregroundColor: Colors.white,
+    backgroundColor: const Color.fromARGB(255, 27, 75, 166),
+    textStyle: const TextStyle(fontSize: 33));
 
+//color paltte
 class ThemesApp {
   static final light = ThemeData(
     fontFamily: "Tajawal",

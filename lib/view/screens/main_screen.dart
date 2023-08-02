@@ -5,7 +5,7 @@ import '../../logic/controllers/main_controller.dart';
 import '../widgets/custom_flitericon.dart';
 import '../widgets/floating_action_widget.dart';
 import '../widgets/text_input.dart';
-import 'components/Carditems.dart';
+import 'components/list_todos.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -57,7 +57,7 @@ class _MainScreenState extends State<MainScreen> {
               Color.fromARGB(146, 167, 172, 230)
             ],
           )),
-          child: CardItems(),
+          child: ListTodos(),
         ),
       ),
     );

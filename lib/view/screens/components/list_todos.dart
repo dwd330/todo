@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sizer/sizer.dart';
 
 import '../../../logic/controllers/main_controller.dart';
 import '../../../routes/routes.dart';
 import 'build_todo_card.dart';
 
-class CardItems extends StatelessWidget {
-  CardItems({Key? key}) : super(key: key);
+class ListTodos extends StatelessWidget {
+  ListTodos({Key? key}) : super(key: key);
 
   final controller = Get.find<MainController>();
 
@@ -50,13 +49,17 @@ class CardItems extends StatelessWidget {
                             return buildTodoCard(
                               todo: controller.todoList[index],
                               mainController: controller,
-                              onTap: () {},
+                              onTap: () {
+                                print("tapped..");
+                              },
                             );
                           } else {
                             return buildTodoCard(
                                 todo: controller.fliterList[index],
                                 mainController: controller,
-                                onTap: () {});
+                                onTap: () {
+                                  print("tapped...");
+                                });
                           }
                         },
                       ),
