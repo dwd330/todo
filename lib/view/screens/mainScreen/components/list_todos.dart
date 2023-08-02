@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:todo/logic/controllers/app_controller.dart';
 
-import '../../../../logic/controllers/main_controller.dart';
 import '../../../../routes/routes.dart';
 import 'build_todo_card.dart';
 
 class ListTodos extends StatelessWidget {
   ListTodos({Key? key}) : super(key: key);
 
-  final controller = Get.find<MainController>();
+  final controller = Get.find<Appcontroller>();
 
   @override
   Widget build(BuildContext context) {

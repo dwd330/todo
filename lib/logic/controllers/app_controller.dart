@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:todo/view/screens/mainScreen/components/build_todo_card.dart';
 import '../../database/local_DB/Isar_services.dart';
 import '../../database/local_DB/collections/todo.dart';
 import '../../database/stoarge/getstoarge.dart';
-import '../../models/userModel.dart';
+import '../../models/user_model.dart';
 
 enum DiscountType { percent, cash }
 
-class MainController extends GetxController {
+class Appcontroller extends GetxController {
   var usertoken = ""; //user loggedin
   var userList = <User>[].obs;
   var todoList = <Todo>[].obs;

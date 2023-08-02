@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 
 import 'package:sizer/sizer.dart';
 import 'package:todo/database/local_DB/collections/todo.dart';
+import 'package:todo/logic/controllers/app_controller.dart';
 
-import '../../../logic/controllers/main_controller.dart';
 import '../../../routes/routes.dart';
 import '../../../utils/theme.dart';
 import '../../widgets/text_input.dart';
@@ -19,7 +19,7 @@ class LoginForm extends StatefulWidget {
 class _LoginFormState extends State<LoginForm> {
   final TextEditingController _username = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final controller = Get.find<MainController>();
+  final controller = Get.find<Appcontroller>();
 
   @override
   void initState() {
@@ -84,7 +84,7 @@ class _LoginFormState extends State<LoginForm> {
                       color: kCOlor2,
                     ),
                     filled: true,
-                    fillColor: Color.fromARGB(156, 234, 232, 232),
+                    fillColor: const Color.fromARGB(156, 234, 232, 232),
                     contentPadding:
                         EdgeInsets.only(left: 5.w, bottom: 3.h, top: 3.h),
                     border: OutlineInputBorder(
@@ -135,7 +135,7 @@ class _LoginFormState extends State<LoginForm> {
                       color: kCOlor2,
                     ),
                     filled: true,
-                    fillColor: Color.fromARGB(156, 234, 232, 232),
+                    fillColor: const Color.fromARGB(156, 234, 232, 232),
                     contentPadding:
                         EdgeInsets.only(left: 5.w, bottom: 3.h, top: 3.h),
                     border: OutlineInputBorder(

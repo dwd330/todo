@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
+import 'package:todo/logic/controllers/app_controller.dart';
 import 'package:todo/view/widgets/text_input.dart';
 
-import '../../../routes/routes.dart';
-import '../../logic/controllers/main_controller.dart';
 import 'textfieldwidget.dart';
 
 class CustomDrawer extends StatelessWidget {
   CustomDrawer({Key? key}) : super(key: key);
-  final controller = Get.find<MainController>();
+  final controller = Get.find<Appcontroller>();
 
   @override
   Widget build(BuildContext context) {

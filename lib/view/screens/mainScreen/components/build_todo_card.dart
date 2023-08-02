@@ -3,13 +3,13 @@ import 'package:sizer/sizer.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../database/local_DB/collections/todo.dart';
-import '../../../../logic/controllers/main_controller.dart';
+import '../../../../logic/controllers/app_controller.dart';
 import '../../../widgets/text_input.dart';
 
 Widget buildTodoCard({
   required Todo todo,
   required Function() onTap,
-  required MainController mainController,
+  required Appcontroller mainController,
 }) {
   return Padding(
     padding: EdgeInsets.symmetric(horizontal: 9.sp, vertical: 4.sp),
