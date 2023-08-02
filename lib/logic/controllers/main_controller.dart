@@ -36,18 +36,18 @@ class MainController extends GetxController {
     }
   }
 
-//isar crud operation (item)=> inventory
-  Future addItem(Todo newitem) async {
+//isar crud operation (todo)
+  Future addTodo(Todo newitem) async {
     await Isarserives().savetodo(newitem);
     loadTodos();
   }
 
-  void deleteItem(Todo item) async {
+  void deleteTodo(Todo item) async {
     await Isarserives().deltodo(item);
     loadTodos();
   }
 
-  Future editItem(Todo item) async {
+  Future editTodo(Todo item) async {
     await Isarserives().updatetodo(item);
   }
 

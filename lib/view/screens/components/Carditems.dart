@@ -4,7 +4,7 @@ import 'package:sizer/sizer.dart';
 
 import '../../../logic/controllers/main_controller.dart';
 import '../../../routes/routes.dart';
-import 'builditemcard.dart';
+import 'build_todo_card.dart';
 
 class CardItems extends StatelessWidget {
   CardItems({Key? key}) : super(key: key);
@@ -18,7 +18,6 @@ class CardItems extends StatelessWidget {
               controller.textcontroller.text.isNotEmpty
           ? Container(
               color: Colors.white,
-              height: 50.h,
               child: const Icon(
                 Icons.info_sharp,
                 color: Colors.black,
@@ -37,32 +36,25 @@ class CardItems extends StatelessWidget {
               : Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 5),
                   child: SizedBox(
-                    height: 22.h,
+                    height: double.infinity,
                     child: SingleChildScrollView(
-                      child: GridView.builder(
+                      child: ListView.builder(
                         physics: const ScrollPhysics(),
                         shrinkWrap: true,
                         primary: true,
                         itemCount: controller.fliterList.isEmpty
                             ? controller.todoList.length
                             : controller.fliterList.length,
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          childAspectRatio: 3.6 / 5.2,
-                          mainAxisSpacing: 3,
-                          crossAxisSpacing: 3,
-                          crossAxisCount: 5,
-                        ),
                         itemBuilder: (context, index) {
                           if (controller.fliterList.isEmpty) {
-                            return buildUserCard(
-                              item: controller.todoList[index],
+                            return buildTodoCard(
+                              todo: controller.todoList[index],
                               mainController: controller,
                               onTap: () {},
                             );
                           } else {
-                            return buildUserCard(
-                                item: controller.fliterList[index],
+                            return buildTodoCard(
+                                todo: controller.fliterList[index],
                                 mainController: controller,
                                 onTap: () {});
                           }

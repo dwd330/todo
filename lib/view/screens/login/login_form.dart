@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:sizer/sizer.dart';
+import 'package:todo/database/local_DB/collections/todo.dart';
 
 import '../../../database/remote/http_handler.dart';
 import '../../../logic/controllers/main_controller.dart';
@@ -101,11 +102,12 @@ class _LoginFormState extends State<LoginForm> {
                 onPressed: () async {
                   //test get all users
                   //   final userslist = await HttpHandler().getusers();
-                  /*   final user = User()
+                  final todo = Todo()
                     ..name = "ola"
-                    ..password = "33333"
-                    ..role = "admin"
-                    ..phone = "1022323"; */
+                    ..descripion = "fefeff fefmmmooof feoos"
+                    ..color = "red"
+                    ..date = "12 mfs";
+                  controller.addTodo(todo);
                   //post user
                   //  print(await HttpHandler().postuser(user));
 

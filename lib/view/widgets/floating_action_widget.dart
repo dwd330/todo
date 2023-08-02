@@ -24,8 +24,9 @@ class Floatingactionwidget extends StatelessWidget {
           ],
         ),
       ),
-      child: const Icon(
-        Icons.add,
+      child: Icon(
+        Icons.add_outlined,
+        size: 24.sp,
         color: Colors.white,
       ),
     );

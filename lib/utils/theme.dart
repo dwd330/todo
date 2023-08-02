@@ -27,6 +27,13 @@ class ThemesApp {
       iconTheme: IconThemeData(color: Colors.black),
       titleTextStyle: TextStyle(color: Colors.black),
     ),
+    cardTheme: const CardTheme(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(12.0),
+        ),
+      ),
+    ),
     colorScheme: ColorScheme.fromSwatch()
         .copyWith(secondary: kCOlor4)
         .copyWith(background: Colors.white),
