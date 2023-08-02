@@ -4,18 +4,18 @@ class TextFieldWidget extends StatelessWidget {
   const TextFieldWidget(
       {Key? key,
       required this.controller,
-      this.icon,
+      required this.underline,
       required this.text,
       this.maxlines})
       : super(key: key);
   final TextEditingController controller;
-  final IconData? icon;
+  final bool underline;
   final String text;
   final int? maxlines;
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(15.0),
       child: TextField(
         maxLines: maxlines ?? 1,
         controller: controller,
@@ -27,42 +27,29 @@ class TextFieldWidget extends StatelessWidget {
         decoration: InputDecoration(
           fillColor: Colors.white,
           focusColor: Colors.red,
-          prefixIcon: Icon(
-            icon,
-          ),
-          suffixIcon: (icon != null)
-              ? IconButton(
-                  onPressed: () {
-                    controller.clear();
-                  },
-                  icon: const Icon(Icons.replay_rounded, color: Colors.grey),
-                )
-              : const SizedBox(
-                  width: 0,
-                ),
           hintText: text,
           hintStyle: const TextStyle(
             color: Colors.black45,
-            fontSize: 12,
+            fontSize: 15,
             fontWeight: FontWeight.w500,
           ),
           filled: true,
-          enabledBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: Colors.white),
-            borderRadius: BorderRadius.circular(10),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: Colors.white),
-            borderRadius: BorderRadius.circular(10),
-          ),
-          errorBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: Colors.white),
-            borderRadius: BorderRadius.circular(10),
-          ),
-          focusedErrorBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: Colors.white),
-            borderRadius: BorderRadius.circular(10),
-          ),
+          enabledBorder: underline
+              ? const UnderlineInputBorder(
+                  borderSide:
+                      BorderSide(color: Color.fromARGB(255, 36, 82, 233)),
+                )
+              : const OutlineInputBorder(
+                  borderSide:
+                      BorderSide(color: Color.fromARGB(255, 15, 15, 16)),
+                ),
+          focusedBorder: underline
+              ? const UnderlineInputBorder(
+                  borderSide: BorderSide(color: Colors.cyan))
+              : const OutlineInputBorder(
+                  borderSide:
+                      BorderSide(color: Color.fromARGB(255, 15, 15, 16)),
+                ),
         ),
       ),
     );

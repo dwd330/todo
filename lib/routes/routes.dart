@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 
 import '../logic/bindings/main_binding.dart';
 import '../view/screens/login/login_screen.dart';
-import '../view/screens/main_screen.dart';
+import '../view/screens/mainScreen/main_screen.dart';
 
 class AppRoutes {
   //initialRoute

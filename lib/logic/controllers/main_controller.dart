@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:todo/view/screens/mainScreen/components/build_todo_card.dart';
 import '../../database/local_DB/Isar_services.dart';
 import '../../database/local_DB/collections/todo.dart';
 import '../../database/stoarge/getstoarge.dart';
@@ -12,7 +13,8 @@ class MainController extends GetxController {
   var userList = <User>[].obs;
   var todoList = <Todo>[].obs;
   var fliterList = <Todo>[].obs;
-
+  var selecteddate = DateTime.now().obs;
+  var selectedtime = TimeOfDay.now().obs;
   @override
   void onInit() async {
     super.onInit();
@@ -23,9 +25,14 @@ class MainController extends GetxController {
   void dispose() {
     super.dispose();
     textcontroller.dispose();
+    nametextcontroller.dispose();
+    discrepitiontextcontroller.dispose();
   }
 
   final TextEditingController textcontroller = TextEditingController();
+  final TextEditingController nametextcontroller = TextEditingController();
+  final TextEditingController discrepitiontextcontroller =
+      TextEditingController();
 
   void loadTodos() async {
     //todos reload
@@ -51,6 +58,50 @@ class MainController extends GetxController {
     await Isarserives().updatetodo(item);
   }
 
+//drawer helper
+  var scaffoldKey = GlobalKey<ScaffoldState>();
+
+  void openDrawer() {
+    scaffoldKey.currentState!.openEndDrawer();
+  }
+
+  void closeDrawer() {
+    scaffoldKey.currentState!.closeEndDrawer();
+  }
+
+//date and time picker
+
+//show date picker
+  void pickdate() async {
+    DateTime? packedate = await showDatePicker(
+      context: Get.context!,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2025),
+      initialEntryMode: DatePickerEntryMode.input,
+      helpText: "select task date",
+      errorFormatText: "enter a valid date,please",
+      fieldLabelText: "when would you like to start",
+    );
+
+    if (packedate != null) {
+      selecteddate.value = packedate;
+    }
+  }
+
+//show time picker
+  void picktime() async {
+    TimeOfDay? packedtime = await showTimePicker(
+      context: Get.context!,
+      initialTime: TimeOfDay.now(),
+      initialEntryMode: TimePickerEntryMode.dial,
+      helpText: "select task time",
+    );
+
+    if (packedtime != null) {
+      selectedtime.value = packedtime;
+    }
+  }
 //user management
 
   //handle login:

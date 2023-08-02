@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:intl/intl.dart';
 
-import '../../../database/local_DB/collections/todo.dart';
-import '../../../logic/controllers/main_controller.dart';
-import '../../widgets/text_input.dart';
+import '../../../../database/local_DB/collections/todo.dart';
+import '../../../../logic/controllers/main_controller.dart';
+import '../../../widgets/text_input.dart';
 
 Widget buildTodoCard({
   required Todo todo,

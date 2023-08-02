@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../logic/controllers/main_controller.dart';
-import '../../../routes/routes.dart';
+import '../../../../logic/controllers/main_controller.dart';
+import '../../../../routes/routes.dart';
 import 'build_todo_card.dart';
 
 class ListTodos extends StatelessWidget {
@@ -51,6 +51,8 @@ class ListTodos extends StatelessWidget {
                               mainController: controller,
                               onTap: () {
                                 print("tapped..");
+                                Scaffold.of(context).openEndDrawer();
+                                controller.openDrawer();
                               },
                             );
                           } else {
