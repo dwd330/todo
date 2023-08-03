@@ -20,7 +20,7 @@ class LoginScreen extends StatelessWidget {
             flex: 3,
             child: Padding(
               padding: EdgeInsets.only(top: 11.h, left: 5.w),
-              child: TextInput(
+              child: TextInputWidget(
                   fontSize: 30.sp,
                   fontWeight: FontWeight.bold,
                   text: " Login",

@@ -20,7 +20,8 @@ const TodoSchema = CollectionSchema(
     r'color': PropertySchema(
       id: 0,
       name: r'color',
-      type: IsarType.string,
+      type: IsarType.byte,
+      enumMap: _TodocolorEnumValueMap,
     ),
     r'date': PropertySchema(
       id: 1,
@@ -40,7 +41,8 @@ const TodoSchema = CollectionSchema(
     r'stuts': PropertySchema(
       id: 4,
       name: r'stuts',
-      type: IsarType.string,
+      type: IsarType.byte,
+      enumMap: _TodostutsEnumValueMap,
     ),
     r'time': PropertySchema(
       id: 5,
@@ -69,12 +71,6 @@ int _todoEstimateSize(
 ) {
   var bytesCount = offsets.last;
   {
-    final value = object.color;
-    if (value != null) {
-      bytesCount += 3 + value.length * 3;
-    }
-  }
-  {
     final value = object.date;
     if (value != null) {
       bytesCount += 3 + value.length * 3;
@@ -88,12 +84,6 @@ int _todoEstimateSize(
   }
   {
     final value = object.name;
-    if (value != null) {
-      bytesCount += 3 + value.length * 3;
-    }
-  }
-  {
-    final value = object.stuts;
     if (value != null) {
       bytesCount += 3 + value.length * 3;
     }
@@ -113,11 +103,11 @@ void _todoSerialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  writer.writeString(offsets[0], object.color);
+  writer.writeByte(offsets[0], object.color.index);
   writer.writeString(offsets[1], object.date);
   writer.writeString(offsets[2], object.descripion);
   writer.writeString(offsets[3], object.name);
-  writer.writeString(offsets[4], object.stuts);
+  writer.writeByte(offsets[4], object.stuts.index);
   writer.writeString(offsets[5], object.time);
 }
 
@@ -128,12 +118,14 @@ Todo _todoDeserialize(
   Map<Type, List<int>> allOffsets,
 ) {
   final object = Todo();
-  object.color = reader.readStringOrNull(offsets[0]);
+  object.color = _TodocolorValueEnumMap[reader.readByteOrNull(offsets[0])] ??
+      ColorPalette.pink;
   object.date = reader.readStringOrNull(offsets[1]);
   object.descripion = reader.readStringOrNull(offsets[2]);
   object.id = id;
   object.name = reader.readStringOrNull(offsets[3]);
-  object.stuts = reader.readStringOrNull(offsets[4]);
+  object.stuts = _TodostutsValueEnumMap[reader.readByteOrNull(offsets[4])] ??
+      StutusType.done;
   object.time = reader.readStringOrNull(offsets[5]);
   return object;
 }
@@ -146,7 +138,8 @@ P _todoDeserializeProp<P>(
 ) {
   switch (propertyId) {
     case 0:
-      return (reader.readStringOrNull(offset)) as P;
+      return (_TodocolorValueEnumMap[reader.readByteOrNull(offset)] ??
+          ColorPalette.pink) as P;
     case 1:
       return (reader.readStringOrNull(offset)) as P;
     case 2:
@@ -154,13 +147,39 @@ P _todoDeserializeProp<P>(
     case 3:
       return (reader.readStringOrNull(offset)) as P;
     case 4:
-      return (reader.readStringOrNull(offset)) as P;
+      return (_TodostutsValueEnumMap[reader.readByteOrNull(offset)] ??
+          StutusType.done) as P;
     case 5:
       return (reader.readStringOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
 }
+
+const _TodocolorEnumValueMap = {
+  'pink': 0,
+  'cyan': 1,
+  'magenta': 2,
+  'darkblue': 3,
+  'green': 4,
+  'yellow': 5,
+};
+const _TodocolorValueEnumMap = {
+  0: ColorPalette.pink,
+  1: ColorPalette.cyan,
+  2: ColorPalette.magenta,
+  3: ColorPalette.darkblue,
+  4: ColorPalette.green,
+  5: ColorPalette.yellow,
+};
+const _TodostutsEnumValueMap = {
+  'done': 0,
+  'undone': 1,
+};
+const _TodostutsValueEnumMap = {
+  0: StutusType.done,
+  1: StutusType.undone,
+};
 
 Id _todoGetId(Todo object) {
   return object.id;
@@ -250,71 +269,47 @@ extension TodoQueryWhere on QueryBuilder<Todo, Todo, QWhereClause> {
 }
 
 extension TodoQueryFilter on QueryBuilder<Todo, Todo, QFilterCondition> {
-  QueryBuilder<Todo, Todo, QAfterFilterCondition> colorIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'color',
-      ));
-    });
-  }
-
-  QueryBuilder<Todo, Todo, QAfterFilterCondition> colorIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'color',
-      ));
-    });
-  }
-
   QueryBuilder<Todo, Todo, QAfterFilterCondition> colorEqualTo(
-    String? value, {
-    bool caseSensitive = true,
-  }) {
+      ColorPalette value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'color',
         value: value,
-        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<Todo, Todo, QAfterFilterCondition> colorGreaterThan(
-    String? value, {
+    ColorPalette value, {
     bool include = false,
-    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
         property: r'color',
         value: value,
-        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<Todo, Todo, QAfterFilterCondition> colorLessThan(
-    String? value, {
+    ColorPalette value, {
     bool include = false,
-    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
         property: r'color',
         value: value,
-        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<Todo, Todo, QAfterFilterCondition> colorBetween(
-    String? lower,
-    String? upper, {
+    ColorPalette lower,
+    ColorPalette upper, {
     bool includeLower = true,
     bool includeUpper = true,
-    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
@@ -323,73 +318,6 @@ extension TodoQueryFilter on QueryBuilder<Todo, Todo, QFilterCondition> {
         includeLower: includeLower,
         upper: upper,
         includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Todo, Todo, QAfterFilterCondition> colorStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'color',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Todo, Todo, QAfterFilterCondition> colorEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'color',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Todo, Todo, QAfterFilterCondition> colorContains(String value,
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'color',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Todo, Todo, QAfterFilterCondition> colorMatches(String pattern,
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'color',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Todo, Todo, QAfterFilterCondition> colorIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'color',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<Todo, Todo, QAfterFilterCondition> colorIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'color',
-        value: '',
       ));
     });
   }
@@ -880,71 +808,47 @@ extension TodoQueryFilter on QueryBuilder<Todo, Todo, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Todo, Todo, QAfterFilterCondition> stutsIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'stuts',
-      ));
-    });
-  }
-
-  QueryBuilder<Todo, Todo, QAfterFilterCondition> stutsIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'stuts',
-      ));
-    });
-  }
-
   QueryBuilder<Todo, Todo, QAfterFilterCondition> stutsEqualTo(
-    String? value, {
-    bool caseSensitive = true,
-  }) {
+      StutusType value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'stuts',
         value: value,
-        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<Todo, Todo, QAfterFilterCondition> stutsGreaterThan(
-    String? value, {
+    StutusType value, {
     bool include = false,
-    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
         property: r'stuts',
         value: value,
-        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<Todo, Todo, QAfterFilterCondition> stutsLessThan(
-    String? value, {
+    StutusType value, {
     bool include = false,
-    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
         property: r'stuts',
         value: value,
-        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<Todo, Todo, QAfterFilterCondition> stutsBetween(
-    String? lower,
-    String? upper, {
+    StutusType lower,
+    StutusType upper, {
     bool includeLower = true,
     bool includeUpper = true,
-    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
@@ -953,73 +857,6 @@ extension TodoQueryFilter on QueryBuilder<Todo, Todo, QFilterCondition> {
         includeLower: includeLower,
         upper: upper,
         includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Todo, Todo, QAfterFilterCondition> stutsStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'stuts',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Todo, Todo, QAfterFilterCondition> stutsEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'stuts',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Todo, Todo, QAfterFilterCondition> stutsContains(String value,
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'stuts',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Todo, Todo, QAfterFilterCondition> stutsMatches(String pattern,
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'stuts',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Todo, Todo, QAfterFilterCondition> stutsIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'stuts',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<Todo, Todo, QAfterFilterCondition> stutsIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'stuts',
-        value: '',
       ));
     });
   }
@@ -1334,10 +1171,9 @@ extension TodoQuerySortThenBy on QueryBuilder<Todo, Todo, QSortThenBy> {
 }
 
 extension TodoQueryWhereDistinct on QueryBuilder<Todo, Todo, QDistinct> {
-  QueryBuilder<Todo, Todo, QDistinct> distinctByColor(
-      {bool caseSensitive = true}) {
+  QueryBuilder<Todo, Todo, QDistinct> distinctByColor() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'color', caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'color');
     });
   }
 
@@ -1362,10 +1198,9 @@ extension TodoQueryWhereDistinct on QueryBuilder<Todo, Todo, QDistinct> {
     });
   }
 
-  QueryBuilder<Todo, Todo, QDistinct> distinctByStuts(
-      {bool caseSensitive = true}) {
+  QueryBuilder<Todo, Todo, QDistinct> distinctByStuts() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'stuts', caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'stuts');
     });
   }
 
@@ -1384,7 +1219,7 @@ extension TodoQueryProperty on QueryBuilder<Todo, Todo, QQueryProperty> {
     });
   }
 
-  QueryBuilder<Todo, String?, QQueryOperations> colorProperty() {
+  QueryBuilder<Todo, ColorPalette, QQueryOperations> colorProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'color');
     });
@@ -1408,7 +1243,7 @@ extension TodoQueryProperty on QueryBuilder<Todo, Todo, QQueryProperty> {
     });
   }
 
-  QueryBuilder<Todo, String?, QQueryOperations> stutsProperty() {
+  QueryBuilder<Todo, StutusType, QQueryOperations> stutsProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'stuts');
     });

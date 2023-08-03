@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:todo/logic/controllers/app_controller.dart';
+import 'package:todo/view/widgets/text_input.dart';
 
 import '../../../../routes/routes.dart';
 import 'build_todo_card.dart';
@@ -26,10 +27,11 @@ class ListTodos extends StatelessWidget {
               ? Center(
                   child: InkWell(
                     onTap: () => Get.toNamed(Routes.mainscreen),
-                    child: const Icon(
-                      Icons.add,
-                      color: Colors.black,
-                    ),
+                    child: const TextInputWidget(
+                        fontSize: 20,
+                        fontWeight: FontWeight.normal,
+                        text: "tap the + icon to add new Todo",
+                        color: Colors.black),
                   ),
                 )
               : Padding(

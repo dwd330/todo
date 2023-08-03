@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
+import 'package:todo/database/local_DB/collections/todo.dart';
 import 'package:todo/logic/controllers/app_controller.dart';
+import 'package:todo/view/widgets/gradient_button.dart';
 import 'package:todo/view/widgets/text_input.dart';
 
 import 'textfieldwidget.dart';
@@ -29,7 +31,7 @@ class CustomDrawer extends StatelessWidget {
           Container(
             margin: EdgeInsets.only(right: 40.w),
             padding: const EdgeInsets.all(12),
-            child: const TextInput(
+            child: const TextInputWidget(
                 fontSize: 25,
                 fontWeight: FontWeight.bold,
                 text: "NEW TASK",
@@ -38,45 +40,31 @@ class CustomDrawer extends StatelessWidget {
           Container(
             margin: EdgeInsets.only(right: 57.w),
             padding: const EdgeInsets.all(10),
-            child: const TextInput(
+            child: const TextInputWidget(
                 fontSize: 19,
                 fontWeight: FontWeight.w200,
                 text: "color ",
                 color: Colors.black),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              CircleAvatar(
-                maxRadius: 12.sp,
-                backgroundColor: Colors.pinkAccent,
+          Wrap(
+            alignment: WrapAlignment.center,
+            spacing: 3.w,
+            runSpacing: 2.h,
+            direction: Axis.horizontal,
+            children: List.generate(
+              6,
+              (index) => InkWell(
+                onTap: () => controller.colorindex = index,
+                child: CircleAvatar(
+                    maxRadius: 12.sp,
+                    backgroundColor: controller.colorslist[index]),
               ),
-              CircleAvatar(
-                maxRadius: 12.sp,
-                backgroundColor: Colors.blueAccent,
-              ),
-              CircleAvatar(
-                maxRadius: 12.sp,
-                backgroundColor: Colors.purple,
-              ),
-              CircleAvatar(
-                maxRadius: 12.sp,
-                backgroundColor: Colors.blueGrey,
-              ),
-              CircleAvatar(
-                maxRadius: 12.sp,
-                backgroundColor: Colors.green,
-              ),
-              CircleAvatar(
-                maxRadius: 12.sp,
-                backgroundColor: Colors.amber,
-              ),
-            ],
+            ),
           ),
           Container(
             margin: EdgeInsets.only(right: 57.w),
             padding: const EdgeInsets.only(top: 15),
-            child: const TextInput(
+            child: const TextInputWidget(
                 fontSize: 19,
                 fontWeight: FontWeight.w200,
                 text: "Name",
@@ -90,7 +78,7 @@ class CustomDrawer extends StatelessWidget {
           Container(
             margin: EdgeInsets.only(right: 45.w),
             padding: const EdgeInsets.only(top: 15),
-            child: const TextInput(
+            child: const TextInputWidget(
                 fontSize: 19,
                 fontWeight: FontWeight.w200,
                 text: "Description",
@@ -105,7 +93,7 @@ class CustomDrawer extends StatelessWidget {
           Container(
             margin: EdgeInsets.only(right: 57.w),
             padding: const EdgeInsets.only(top: 15),
-            child: const TextInput(
+            child: const TextInputWidget(
                 fontSize: 19,
                 fontWeight: FontWeight.w200,
                 text: "date",
@@ -123,7 +111,7 @@ class CustomDrawer extends StatelessWidget {
               ),
               child: ListTile(
                 trailing: const Icon(Icons.arrow_drop_down),
-                title: Obx(() => TextInput(
+                title: Obx(() => TextInputWidget(
                     fontSize: 19,
                     fontWeight: FontWeight.w200,
                     text: controller.selecteddate.value.toString(),
@@ -134,7 +122,7 @@ class CustomDrawer extends StatelessWidget {
           Container(
             margin: EdgeInsets.only(right: 57.w),
             padding: const EdgeInsets.only(top: 15),
-            child: const TextInput(
+            child: const TextInputWidget(
                 fontSize: 19,
                 fontWeight: FontWeight.w200,
                 text: "Time",
@@ -152,7 +140,7 @@ class CustomDrawer extends StatelessWidget {
               ),
               child: ListTile(
                 trailing: const Icon(Icons.arrow_drop_down),
-                title: Obx(() => TextInput(
+                title: Obx(() => TextInputWidget(
                     fontSize: 19,
                     fontWeight: FontWeight.w200,
                     text: controller.selectedtime.value.toString(),
@@ -160,6 +148,30 @@ class CustomDrawer extends StatelessWidget {
               ),
             ),
           ),
+          Container(
+            margin: EdgeInsets.only(right: 30.w),
+            padding: EdgeInsets.only(top: 6.h),
+            child: Gradientbutton(
+              width: 36.w,
+              height: 7.h,
+              fontsize: 15.sp,
+              onPressed: () {
+                final todo = Todo()
+                  ..name = controller.nametextcontroller.text
+                  ..descripion = controller.discrepitiontextcontroller.text
+                  ..color = ColorPalette.values[controller.colorindex]
+                  ..date = controller.selecteddate.value
+                  ..time = controller.selectedtime.value
+                  ..stuts = StutusType.undone;
+                controller.addTodo(todo);
+
+                controller.nametextcontroller.clear();
+                controller.discrepitiontextcontroller.clear();
+                Get.back();
+              },
+              textvalue: "Add",
+            ),
+          )
         ],
       );
 }

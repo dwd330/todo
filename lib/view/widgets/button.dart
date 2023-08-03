@@ -37,7 +37,7 @@ class AppButton extends StatelessWidget {
         child: ElevatedButton(
           style: style ?? style1,
           onPressed: onPressed,
-          child: TextInput(
+          child: TextInputWidget(
               fontSize: fontsize ?? 8.sp,
               fontWeight: FontWeight.bold,
               text: textvalue,

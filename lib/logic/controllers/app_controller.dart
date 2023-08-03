@@ -1,19 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import '../../database/local_DB/Isar_services.dart';
 import '../../database/local_DB/collections/todo.dart';
 import '../../database/stoarge/getstoarge.dart';
 import '../../models/user_model.dart';
 
-enum DiscountType { percent, cash }
+enum StutusType { done, undone }
+
+enum ColorPalette { pink, cyan, magenta, darkblue, green, yellow }
 
 class Appcontroller extends GetxController {
   var usertoken = ""; //user loggedin
   var userList = <User>[].obs;
   var todoList = <Todo>[].obs;
   var fliterList = <Todo>[].obs;
-  var selecteddate = DateTime.now().obs;
-  var selectedtime = TimeOfDay.now().obs;
+  var selecteddate = "".obs;
+  var selectedtime = "".obs;
+  int colorindex = 0;
+  List<Color> colorslist = [
+    Colors.pinkAccent,
+    Colors.blueAccent,
+    Colors.purple,
+    Colors.blueGrey,
+    Colors.green,
+    Colors.amber,
+  ];
   @override
   void onInit() async {
     super.onInit();
@@ -84,7 +96,7 @@ class Appcontroller extends GetxController {
     );
 
     if (packedate != null) {
-      selecteddate.value = packedate;
+      selecteddate.value = DateFormat("d MMM yyyy ").format(packedate);
     }
   }
 
@@ -98,7 +110,8 @@ class Appcontroller extends GetxController {
     );
 
     if (packedtime != null) {
-      selectedtime.value = packedtime;
+      selectedtime.value =
+          '${packedtime.hour.toString().padLeft(2, '0')}:${packedtime.minute.toString().padLeft(2, '0')}';
     }
   }
 //user management

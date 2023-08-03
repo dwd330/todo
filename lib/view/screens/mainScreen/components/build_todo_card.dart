@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
-import 'package:intl/intl.dart';
 
 import '../../../../database/local_DB/collections/todo.dart';
 import '../../../../logic/controllers/app_controller.dart';
@@ -21,7 +20,7 @@ Widget buildTodoCard({
           height: 5.h,
           child: CircleAvatar(
             maxRadius: 9.sp,
-            backgroundColor: todo.color != null ? Colors.red : Colors.amber,
+            backgroundColor: mainController.colorslist[todo.color.index],
           ),
         ),
         subtitle: SizedBox(
@@ -73,19 +72,15 @@ Column dateandtime(Todo todo) {
     mainAxisAlignment: MainAxisAlignment.center,
     crossAxisAlignment: CrossAxisAlignment.end,
     children: [
-      TextInput(
+      TextInputWidget(
           fontSize: 12.sp,
           fontWeight: FontWeight.bold,
-          text: todo.date == null
-              ? todo.date!
-              : DateFormat("d MMM ").format(DateTime.now()),
+          text: todo.date!.substring(0, 2) + todo.date!.substring(2, 6),
           color: Colors.black),
-      TextInput(
+      TextInputWidget(
           fontSize: 11.sp,
           fontWeight: FontWeight.normal,
-          text: todo.time != null
-              ? todo.time!
-              : DateFormat(" hh:mm a").format(DateTime.now()),
+          text: todo.time!,
           color: Colors.black),
     ],
   );

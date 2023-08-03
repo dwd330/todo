@@ -7,6 +7,7 @@ import 'package:todo/logic/controllers/app_controller.dart';
 
 import '../../../routes/routes.dart';
 import '../../../utils/theme.dart';
+import '../../widgets/gradient_button.dart';
 import '../../widgets/text_input.dart';
 
 class LoginForm extends StatefulWidget {
@@ -60,7 +61,7 @@ class _LoginFormState extends State<LoginForm> {
                 ),
                 child: Align(
                   alignment: Alignment.centerLeft,
-                  child: TextInput(
+                  child: TextInputWidget(
                       fontSize: 15.sp,
                       fontWeight: FontWeight.normal,
                       text: "email *",
@@ -111,7 +112,7 @@ class _LoginFormState extends State<LoginForm> {
                 ),
                 child: Align(
                   alignment: Alignment.centerLeft,
-                  child: TextInput(
+                  child: TextInputWidget(
                       fontSize: 15.sp,
                       fontWeight: FontWeight.normal,
                       text: "Password *",
@@ -156,16 +157,15 @@ class _LoginFormState extends State<LoginForm> {
               SizedBox(
                 height: 3.h,
               ),
-              InkWell(
-                onTap: () async {
+              Gradientbutton(
+                width: 77.w,
+                height: 8.h,
+                fontsize: 15.sp,
+                textvalue: "sign in",
+                onPressed: () async {
                   //test get all users
                   //   final userslist = await HttpHandler().getusers();
-                  final todo = Todo()
-                    ..name = "ola"
-                    ..descripion = "fefeff fefmmmooof feoos"
-                    ..color = "red"
-                    ..date = "12 mfs";
-                  controller.addTodo(todo);
+
                   //post user
                   //  print(await HttpHandler().postuser(user));
 
@@ -190,28 +190,6 @@ class _LoginFormState extends State<LoginForm> {
                     );
                   }
                 },
-                child: Container(
-                  width: 77.w,
-                  height: 8.h,
-                  decoration: const BoxDecoration(
-                      shape: BoxShape.rectangle,
-                      borderRadius: BorderRadius.all(Radius.circular(25)),
-                      gradient: LinearGradient(
-                        begin: Alignment.topRight,
-                        end: Alignment.bottomCenter,
-                        colors: [
-                          Color.fromARGB(157, 61, 205, 253),
-                          Color.fromARGB(224, 7, 76, 237),
-                        ],
-                      )),
-                  child: Center(
-                    child: TextInput(
-                        fontSize: 15.sp,
-                        fontWeight: FontWeight.bold,
-                        text: " sign in",
-                        color: Colors.white),
-                  ),
-                ),
               ),
             ],
           ),

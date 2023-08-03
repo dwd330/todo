@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 import '../../../logic/controllers/app_controller.dart';
 import '../../widgets/custom_flitericon.dart';
-import '../../widgets/drawer.dart';
+import '../../widgets/custom_drawer.dart';
 import '../../widgets/floating_action_widget.dart';
 import '../../widgets/text_input.dart';
 import 'components/bottom_sheet_widget.dart';
@@ -41,7 +41,7 @@ class _MainScreenState extends State<MainScreen> {
           ],
           elevation: 0,
           title: Center(
-            child: TextInput(
+            child: TextInputWidget(
                 fontSize: 15.sp,
                 fontWeight: FontWeight.bold,
                 text: " TODO",

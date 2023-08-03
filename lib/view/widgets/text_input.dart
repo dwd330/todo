@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class TextInput extends StatelessWidget {
+class TextInputWidget extends StatelessWidget {
   final String text;
   final Color color;
   final double fontSize;
   final FontWeight fontWeight;
 
-  const TextInput({
+  const TextInputWidget({
     required this.fontSize,
     required this.fontWeight,
     required this.text,

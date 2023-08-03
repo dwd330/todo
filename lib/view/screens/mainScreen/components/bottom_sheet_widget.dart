@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 import 'package:todo/logic/controllers/app_controller.dart';
+import 'package:todo/view/widgets/button.dart';
 import 'package:todo/view/widgets/text_input.dart';
 
 class BottomSheetWidget extends StatelessWidget {
@@ -22,69 +23,91 @@ class BottomSheetWidget extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          const TextInput(
+          const TextInputWidget(
               fontSize: 25,
               fontWeight: FontWeight.bold,
               text: "fliter by color",
               color: Colors.black),
           colorlist(),
-          const TextInput(
+          const TextInputWidget(
               fontSize: 25,
               fontWeight: FontWeight.bold,
               text: "fliter by date",
               color: Colors.black),
-          Row(
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              TextButton(
-                onPressed: () {
-                  controller.pickdate();
-                },
-                child: Container(
-                  width: 40.w,
-                  decoration: const BoxDecoration(
-                    border: Border(
-                      bottom: BorderSide(width: 1.0, color: Colors.black),
-                    ),
-                  ),
-                  child: ListTile(
-                    trailing: const Icon(Icons.arrow_drop_down),
-                    title: Obx(() => TextInput(
-                        fontSize: 19,
-                        fontWeight: FontWeight.w200,
-                        text: controller.selecteddate.value.toString(),
-                        color: Colors.black)),
-                  ),
-                ),
+              const Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  TextInputWidget(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      text: "From",
+                      color: Colors.blue),
+                  TextInputWidget(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      text: "To",
+                      color: Colors.blue),
+                ],
               ),
-              TextButton(
-                onPressed: () {
-                  controller.pickdate();
-                },
-                child: Container(
-                  width: 40.w,
-                  decoration: const BoxDecoration(
-                    border: Border(
-                      bottom: BorderSide(width: 1.0, color: Colors.black),
+              Row(
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      controller.pickdate();
+                    },
+                    child: Container(
+                      width: 45.w,
+                      decoration: const BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(width: 1.0, color: Colors.black),
+                        ),
+                      ),
+                      child: ListTile(
+                        trailing: const Icon(Icons.arrow_drop_down),
+                        title: Obx(() => TextInputWidget(
+                            fontSize: 19,
+                            fontWeight: FontWeight.w200,
+                            text: controller.selecteddate.value.toString(),
+                            color: Colors.black)),
+                      ),
                     ),
                   ),
-                  child: ListTile(
-                    trailing: const Icon(Icons.arrow_drop_down),
-                    title: Obx(() => TextInput(
-                        fontSize: 19,
-                        fontWeight: FontWeight.w200,
-                        text: controller.selecteddate.value.toString(),
-                        color: Colors.black)),
+                  TextButton(
+                    onPressed: () {
+                      controller.pickdate();
+                    },
+                    child: Container(
+                      width: 45.w,
+                      decoration: const BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(width: 1.0, color: Colors.black),
+                        ),
+                      ),
+                      child: ListTile(
+                        trailing: const Icon(Icons.arrow_drop_down),
+                        title: Obx(() => TextInputWidget(
+                            fontSize: 19,
+                            fontWeight: FontWeight.w200,
+                            text: controller.selecteddate.value.toString(),
+                            color: Colors.black)),
+                      ),
+                    ),
                   ),
-                ),
+                ],
               ),
             ],
           ),
-          OutlinedButton(
-            onPressed: () {
-              Get.back();
-            },
-            child: const Text('apply'),
-          ),
+          AppButton(
+              width: 35.w,
+              height: 6.h,
+              fontsize: 19,
+              textvalue: "Apply",
+              onPressed: () {
+                Get.back();
+              }),
         ],
       ),
     );
