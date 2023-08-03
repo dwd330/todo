@@ -20,6 +20,11 @@ final ButtonStyle style1 = ElevatedButton.styleFrom(
     backgroundColor: const Color.fromARGB(255, 27, 75, 166),
     textStyle: const TextStyle(fontSize: 33));
 
+final ButtonStyle style2 = ElevatedButton.styleFrom(
+    foregroundColor: Colors.white,
+    backgroundColor: const Color.fromARGB(255, 187, 7, 7),
+    textStyle: const TextStyle(fontSize: 33));
+
 //color paltte
 class ThemesApp {
   static final light = ThemeData(

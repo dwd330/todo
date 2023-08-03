@@ -15,9 +15,13 @@ class Appcontroller extends GetxController {
   var userList = <User>[].obs;
   var todoList = <Todo>[].obs;
   var fliterList = <Todo>[].obs;
+
+  //date and time
   var selecteddate = "".obs;
   var selectedtime = "".obs;
-  int colorindex = 0;
+
+  //color vars
+  var colorindex = 0.obs;
   List<Color> colorslist = [
     Colors.pinkAccent,
     Colors.blueAccent,
@@ -26,6 +30,9 @@ class Appcontroller extends GetxController {
     Colors.green,
     Colors.amber,
   ];
+
+  var selectedtodo = Todo().obs;
+  var iseditmode = false.obs;
   @override
   void onInit() async {
     super.onInit();
@@ -55,18 +62,19 @@ class Appcontroller extends GetxController {
   }
 
 //isar crud operation (todo)
-  Future addTodo(Todo newitem) async {
-    await Isarserives().savetodo(newitem);
+  Future addTodo(Todo newtodo) async {
+    await Isarserives().savetodo(newtodo);
     loadTodos();
   }
 
-  void deleteTodo(Todo item) async {
-    await Isarserives().deltodo(item);
+  void deleteTodo(Todo todo) async {
+    await Isarserives().deltodo(todo);
     loadTodos();
   }
 
-  Future editTodo(Todo item) async {
-    await Isarserives().updatetodo(item);
+  Future editTodo(Todo todo) async {
+    await Isarserives().updatetodo(todo);
+    loadTodos();
   }
 
 //drawer helper
@@ -78,6 +86,23 @@ class Appcontroller extends GetxController {
 
   void closeDrawer() {
     scaffoldKey.currentState!.closeEndDrawer();
+  }
+
+//set todo (for drawer to update-delete)
+//used to switch visiablitiy of widgets in drawer cuz we have on one end drawer
+
+  void toggleeditmode(bool value) async {
+    iseditmode.value = value;
+  }
+
+//for updating
+  void settodo(Todo todo) async {
+    selectedtodo.value = todo;
+    nametextcontroller.text = todo.name!;
+    discrepitiontextcontroller.text = todo.descripion!;
+    selecteddate.value = todo.date!;
+    selectedtime.value = todo.time!;
+    colorindex.value = todo.color.index;
   }
 
 //date and time picker

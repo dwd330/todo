@@ -29,7 +29,7 @@ class AppButton extends StatelessWidget {
       shadowColor: Colors.blue,
       clipBehavior: Clip.antiAlias,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(25),
       ),
       child: SizedBox(
         height: height ?? 9.h,

@@ -52,8 +52,8 @@ class ListTodos extends StatelessWidget {
                               todo: controller.todoList[index],
                               mainController: controller,
                               onTap: () {
-                                print("tapped..");
-                                Scaffold.of(context).openEndDrawer();
+                                controller.toggleeditmode(true);
+                                controller.settodo(controller.todoList[index]);
                                 controller.openDrawer();
                               },
                             );

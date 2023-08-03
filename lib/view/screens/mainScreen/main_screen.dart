@@ -6,7 +6,7 @@ import '../../widgets/custom_flitericon.dart';
 import '../../widgets/custom_drawer.dart';
 import '../../widgets/floating_action_widget.dart';
 import '../../widgets/text_input.dart';
-import 'components/bottom_sheet_widget.dart';
+import '../../widgets/bottom_sheet_widget.dart';
 import 'components/list_todos.dart';
 
 class MainScreen extends StatefulWidget {
@@ -50,6 +50,7 @@ class _MainScreenState extends State<MainScreen> {
         ),
         floatingActionButton: Floatingactionwidget(
           onPressed: () {
+            controller.toggleeditmode(false);
             controller.openDrawer();
           },
         ),

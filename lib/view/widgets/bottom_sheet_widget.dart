@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 import 'package:todo/logic/controllers/app_controller.dart';
 import 'package:todo/view/widgets/button.dart';
+import 'package:todo/view/widgets/color_palette_widget.dart';
 import 'package:todo/view/widgets/text_input.dart';
 
 class BottomSheetWidget extends StatelessWidget {
@@ -28,7 +29,7 @@ class BottomSheetWidget extends StatelessWidget {
               fontWeight: FontWeight.bold,
               text: "fliter by color",
               color: Colors.black),
-          colorlist(),
+          SizedBox(height: 7.h, child: ColorPaletteWidget()),
           const TextInputWidget(
               fontSize: 25,
               fontWeight: FontWeight.bold,
@@ -112,37 +113,4 @@ class BottomSheetWidget extends StatelessWidget {
       ),
     );
   }
-}
-
-colorlist() {
-  return Wrap(
-    spacing: 12.0,
-    runSpacing: 12.0,
-    children: <Widget>[
-      CircleAvatar(
-        maxRadius: 12.sp,
-        backgroundColor: Colors.pinkAccent,
-      ),
-      CircleAvatar(
-        maxRadius: 12.sp,
-        backgroundColor: Colors.blueAccent,
-      ),
-      CircleAvatar(
-        maxRadius: 12.sp,
-        backgroundColor: Colors.purple,
-      ),
-      CircleAvatar(
-        maxRadius: 12.sp,
-        backgroundColor: Colors.blueGrey,
-      ),
-      CircleAvatar(
-        maxRadius: 12.sp,
-        backgroundColor: Colors.green,
-      ),
-      CircleAvatar(
-        maxRadius: 12.sp,
-        backgroundColor: Colors.amber,
-      ),
-    ],
-  );
 }
