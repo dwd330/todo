@@ -28,7 +28,7 @@ final ButtonStyle style2 = ElevatedButton.styleFrom(
 //color paltte
 class ThemesApp {
   static final light = ThemeData(
-    fontFamily: "Tajawal",
+    fontFamily: "Urbanist",
     primaryColor: mainColor,
     brightness: Brightness.light,
     appBarTheme: const AppBarTheme(

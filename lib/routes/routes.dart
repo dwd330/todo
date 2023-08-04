@@ -7,7 +7,7 @@ import '../view/screens/mainScreen/main_screen.dart';
 class AppRoutes {
   //initialRoute
   static const startscreen = Routes.loginScreen;
-
+  static const mainscreen = Routes.mainscreen;
   //getPages
   static final routes = [
     GetPage(

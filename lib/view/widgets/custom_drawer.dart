@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 import 'package:todo/database/local_DB/collections/todo.dart';
 import 'package:todo/logic/controllers/app_controller.dart';
+import 'package:todo/services/notification_services.dart';
 import 'package:todo/utils/theme.dart';
 import 'package:todo/view/widgets/button.dart';
 import 'package:todo/view/widgets/gradient_button.dart';
@@ -145,7 +146,8 @@ class CustomDrawer extends StatelessWidget {
                     width: 36.w,
                     height: 7.h,
                     fontsize: 15.sp,
-                    onPressed: () {
+                    onPressed: () async {
+                      //create Tod opject model
                       final todo = Todo()
                         ..name = controller.nametextcontroller.text
                         ..descripion =
@@ -155,10 +157,21 @@ class CustomDrawer extends StatelessWidget {
                         ..date = controller.selecteddate.value
                         ..time = controller.selectedtime.value
                         ..stuts = StutusType.undone;
+
+                      //add todo to local DB
                       controller.addTodo(todo);
 
+                      //set noitication
+                      await NotificationService.showNotification(
+                          title: "reminder",
+                          body: "your todo ${todo.name} time is soon",
+                          scheduled: true,
+                          interval: 5);
+
+                      //clear text controllers
                       controller.nametextcontroller.clear();
                       controller.discrepitiontextcontroller.clear();
+                      //finally, get back to main screen
                       Get.back();
                     },
                     textvalue: "Add",
