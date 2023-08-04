@@ -38,7 +38,6 @@ class HttpHandler {
       final uri = Uri.parse(baseUrl + EndPoints.users);
       var _header = {"Content-Type": "application/json"};
       final _payload = jsonEncode(user.toJson());
-      print(_payload);
       final response = await client.post(uri, headers: _header, body: _payload);
       if (response.statusCode == 200 || response.statusCode == 201) {
         return response.body;

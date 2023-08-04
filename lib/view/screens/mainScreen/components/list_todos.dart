@@ -62,6 +62,10 @@ class ListTodos extends StatelessWidget {
                                 todo: controller.fliterList[index],
                                 mainController: controller,
                                 onTap: () {
+                                  controller.toggleeditmode(true);
+                                  controller
+                                      .settodo(controller.fliterList[index]);
+                                  controller.openDrawer();
                                   print("tapped...");
                                 });
                           }
