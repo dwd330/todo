@@ -193,7 +193,7 @@ class Appcontroller extends GetxController {
       initialDate: DateTime.now(),
       firstDate: DateTime(2000),
       lastDate: DateTime(2025),
-      initialEntryMode: DatePickerEntryMode.input,
+      initialEntryMode: DatePickerEntryMode.calendar,
       helpText: "select task date",
       errorFormatText: "enter a valid date,please",
       fieldLabelText: "How would you like to fliter",
