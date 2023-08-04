@@ -38,11 +38,11 @@ const TodoSchema = CollectionSchema(
       name: r'name',
       type: IsarType.string,
     ),
-    r'stuts': PropertySchema(
+    r'stutus': PropertySchema(
       id: 4,
-      name: r'stuts',
+      name: r'stutus',
       type: IsarType.byte,
-      enumMap: _TodostutsEnumValueMap,
+      enumMap: _TodostutusEnumValueMap,
     ),
     r'time': PropertySchema(
       id: 5,
@@ -101,7 +101,7 @@ void _todoSerialize(
   writer.writeDateTime(offsets[1], object.date);
   writer.writeString(offsets[2], object.descripion);
   writer.writeString(offsets[3], object.name);
-  writer.writeByte(offsets[4], object.stuts.index);
+  writer.writeByte(offsets[4], object.stutus.index);
   writer.writeString(offsets[5], object.time);
 }
 
@@ -118,7 +118,7 @@ Todo _todoDeserialize(
   object.descripion = reader.readStringOrNull(offsets[2]);
   object.id = id;
   object.name = reader.readStringOrNull(offsets[3]);
-  object.stuts = _TodostutsValueEnumMap[reader.readByteOrNull(offsets[4])] ??
+  object.stutus = _TodostutusValueEnumMap[reader.readByteOrNull(offsets[4])] ??
       StutusType.done;
   object.time = reader.readStringOrNull(offsets[5]);
   return object;
@@ -141,7 +141,7 @@ P _todoDeserializeProp<P>(
     case 3:
       return (reader.readStringOrNull(offset)) as P;
     case 4:
-      return (_TodostutsValueEnumMap[reader.readByteOrNull(offset)] ??
+      return (_TodostutusValueEnumMap[reader.readByteOrNull(offset)] ??
           StutusType.done) as P;
     case 5:
       return (reader.readStringOrNull(offset)) as P;
@@ -166,11 +166,11 @@ const _TodocolorValueEnumMap = {
   4: ColorPalette.green,
   5: ColorPalette.yellow,
 };
-const _TodostutsEnumValueMap = {
+const _TodostutusEnumValueMap = {
   'done': 0,
   'undone': 1,
 };
-const _TodostutsValueEnumMap = {
+const _TodostutusValueEnumMap = {
   0: StutusType.done,
   1: StutusType.undone,
 };
@@ -726,43 +726,43 @@ extension TodoQueryFilter on QueryBuilder<Todo, Todo, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Todo, Todo, QAfterFilterCondition> stutsEqualTo(
+  QueryBuilder<Todo, Todo, QAfterFilterCondition> stutusEqualTo(
       StutusType value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'stuts',
+        property: r'stutus',
         value: value,
       ));
     });
   }
 
-  QueryBuilder<Todo, Todo, QAfterFilterCondition> stutsGreaterThan(
+  QueryBuilder<Todo, Todo, QAfterFilterCondition> stutusGreaterThan(
     StutusType value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: r'stuts',
+        property: r'stutus',
         value: value,
       ));
     });
   }
 
-  QueryBuilder<Todo, Todo, QAfterFilterCondition> stutsLessThan(
+  QueryBuilder<Todo, Todo, QAfterFilterCondition> stutusLessThan(
     StutusType value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: r'stuts',
+        property: r'stutus',
         value: value,
       ));
     });
   }
 
-  QueryBuilder<Todo, Todo, QAfterFilterCondition> stutsBetween(
+  QueryBuilder<Todo, Todo, QAfterFilterCondition> stutusBetween(
     StutusType lower,
     StutusType upper, {
     bool includeLower = true,
@@ -770,7 +770,7 @@ extension TodoQueryFilter on QueryBuilder<Todo, Todo, QFilterCondition> {
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: r'stuts',
+        property: r'stutus',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -977,15 +977,15 @@ extension TodoQuerySortBy on QueryBuilder<Todo, Todo, QSortBy> {
     });
   }
 
-  QueryBuilder<Todo, Todo, QAfterSortBy> sortByStuts() {
+  QueryBuilder<Todo, Todo, QAfterSortBy> sortByStutus() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'stuts', Sort.asc);
+      return query.addSortBy(r'stutus', Sort.asc);
     });
   }
 
-  QueryBuilder<Todo, Todo, QAfterSortBy> sortByStutsDesc() {
+  QueryBuilder<Todo, Todo, QAfterSortBy> sortByStutusDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'stuts', Sort.desc);
+      return query.addSortBy(r'stutus', Sort.desc);
     });
   }
 
@@ -1063,15 +1063,15 @@ extension TodoQuerySortThenBy on QueryBuilder<Todo, Todo, QSortThenBy> {
     });
   }
 
-  QueryBuilder<Todo, Todo, QAfterSortBy> thenByStuts() {
+  QueryBuilder<Todo, Todo, QAfterSortBy> thenByStutus() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'stuts', Sort.asc);
+      return query.addSortBy(r'stutus', Sort.asc);
     });
   }
 
-  QueryBuilder<Todo, Todo, QAfterSortBy> thenByStutsDesc() {
+  QueryBuilder<Todo, Todo, QAfterSortBy> thenByStutusDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'stuts', Sort.desc);
+      return query.addSortBy(r'stutus', Sort.desc);
     });
   }
 
@@ -1115,9 +1115,9 @@ extension TodoQueryWhereDistinct on QueryBuilder<Todo, Todo, QDistinct> {
     });
   }
 
-  QueryBuilder<Todo, Todo, QDistinct> distinctByStuts() {
+  QueryBuilder<Todo, Todo, QDistinct> distinctByStutus() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'stuts');
+      return query.addDistinctBy(r'stutus');
     });
   }
 
@@ -1160,9 +1160,9 @@ extension TodoQueryProperty on QueryBuilder<Todo, Todo, QQueryProperty> {
     });
   }
 
-  QueryBuilder<Todo, StutusType, QQueryOperations> stutsProperty() {
+  QueryBuilder<Todo, StutusType, QQueryOperations> stutusProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'stuts');
+      return query.addPropertyName(r'stutus');
     });
   }
 

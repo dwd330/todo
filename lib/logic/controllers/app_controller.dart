@@ -33,7 +33,7 @@ class Appcontroller extends GetxController {
 //for update todo
   var selectedtodo = Todo().obs;
   var iseditmode = false.obs;
-
+  var isdone = false.obs;
   @override
   void onInit() async {
     super.onInit();
@@ -82,6 +82,15 @@ class Appcontroller extends GetxController {
           }).toList();
         } catch (error) {
           throw ("Error on color flitering");
+        }
+        break;
+      case "stutus":
+        try {
+          fliterList.value = todoList.where((todo) {
+            return todo.stutus == filter;
+          }).toList();
+        } catch (error) {
+          throw ("Error on stutus flitering");
         }
         break;
       case "date":
@@ -143,6 +152,7 @@ class Appcontroller extends GetxController {
     selecteddate.value = todo.date!;
     selectedtime.value = todo.time!;
     colorindex.value = todo.color.index;
+    isdone.value = todo.stutus == StutusType.done;
   }
 
   //clean data vars
@@ -154,6 +164,7 @@ class Appcontroller extends GetxController {
     selecteddate.value = DateTime.now();
     selectedtime.value = "";
     colorindex.value = 0;
+    isdone.value = false;
   }
 
 //date and time picker

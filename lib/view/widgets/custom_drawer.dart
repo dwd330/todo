@@ -31,14 +31,42 @@ class CustomDrawer extends StatelessWidget {
 
   bulidmenuitems(BuildContext context) => Column(
         children: [
-          Container(
-            margin: EdgeInsets.only(right: 32.w),
-            padding: const EdgeInsets.all(10),
-            child: TextInputWidget(
-                fontSize: 25,
-                fontWeight: FontWeight.w500,
-                text: controller.iseditmode.value ? "Update Task" : "NEW TASK",
-                color: Colors.black),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Container(
+                padding: const EdgeInsets.all(10),
+                child: TextInputWidget(
+                    fontSize: 25,
+                    fontWeight: FontWeight.w500,
+                    text: controller.iseditmode.value
+                        ? "Update Task"
+                        : "NEW TASK",
+                    color: Colors.black),
+              ),
+              Obx(() => Opacity(
+                    opacity: controller.isdone.value ? 0.9 : 0.3,
+                    child: AppButton(
+                        width: 12.w,
+                        height: 5.h,
+                        fontsize: 15,
+                        textvalue: "✔",
+                        onPressed: () {
+                          controller.isdone.value = !controller.isdone.value;
+                          //toggle stutus
+                          switch (controller.selectedtodo.value.stutus) {
+                            case StutusType.done:
+                              controller.selectedtodo.value.stutus =
+                                  StutusType.undone;
+                              break;
+                            case StutusType.undone:
+                              controller.selectedtodo.value.stutus =
+                                  StutusType.done;
+                              break;
+                          }
+                        }),
+                  )),
+            ],
           ),
           Container(
             margin: EdgeInsets.only(right: 57.w),
@@ -183,7 +211,7 @@ class CustomDrawer extends StatelessWidget {
                               ColorPalette.values[controller.colorindex.value]
                           ..date = controller.selecteddate.value
                           ..time = controller.selectedtime.value
-                          ..stuts = StutusType.undone;
+                          ..stutus = StutusType.undone;
 
                         //add todo to local DB
                         controller.addTodo(todo);

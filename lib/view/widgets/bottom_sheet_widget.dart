@@ -135,6 +135,36 @@ class BottomSheetWidget extends StatelessWidget {
               ),
             ],
           ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              const TextInputWidget(
+                  fontSize: 25,
+                  fontWeight: FontWeight.w500,
+                  text: "fliter by stutus:",
+                  color: Colors.black),
+              AppButton(
+                  width: 20.w,
+                  height: 5.h,
+                  fontsize: 13,
+                  textvalue: "done",
+                  onPressed: () {
+                    controller.fliterTodos(
+                        by: "stutus", filter: StutusType.done);
+                    Get.back();
+                  }),
+              AppButton(
+                  width: 20.w,
+                  height: 5.h,
+                  fontsize: 13,
+                  textvalue: "undone",
+                  onPressed: () {
+                    controller.fliterTodos(
+                        by: "stutus", filter: StutusType.undone);
+                    Get.back();
+                  }),
+            ],
+          ),
           AppButton(
               width: 38.w,
               height: 6.h,

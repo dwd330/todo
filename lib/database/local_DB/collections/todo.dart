@@ -10,7 +10,7 @@ class Todo {
   String? time;
   DateTime? date;
   @enumerated
-  StutusType stuts = StutusType.undone;
+  StutusType stutus = StutusType.undone;
   @enumerated
   ColorPalette color = ColorPalette.cyan;
 }
