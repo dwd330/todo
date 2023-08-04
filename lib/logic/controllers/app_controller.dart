@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:todo/database/remote/http_handler.dart';
+import 'package:todo/database/remote_server/http_handler.dart';
 import '../../database/local_DB/Isar_services.dart';
 import '../../database/local_DB/collections/todo.dart';
-import '../../database/stoarge/getstoarge.dart';
+import '../../database/local_stoarge/getstoarge.dart';
 
 enum StutusType { done, undone }
 

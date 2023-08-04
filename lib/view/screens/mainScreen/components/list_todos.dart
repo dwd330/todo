@@ -66,7 +66,6 @@ class ListTodos extends StatelessWidget {
                                   controller
                                       .settodo(controller.fliterList[index]);
                                   controller.openDrawer();
-                                  print("tapped...");
                                 });
                           }
                         },
