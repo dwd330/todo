@@ -22,7 +22,7 @@ class LoginScreen extends StatelessWidget {
               padding: EdgeInsets.only(top: 11.h, left: 5.w),
               child: TextInputWidget(
                   fontSize: 30.sp,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w500,
                   text: " Login",
                   color: Colors.black),
             ),

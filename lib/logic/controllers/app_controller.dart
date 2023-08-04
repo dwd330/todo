@@ -14,7 +14,7 @@ class Appcontroller extends GetxController {
   var todoList = <Todo>[].obs;
   var fliterList = <Todo>[].obs;
 
-  //date and time
+  //date and time (Todo)
   var selecteddate = DateTime.now().obs;
   var selectedtime = "".obs;
 //fliter dates
@@ -33,9 +33,6 @@ class Appcontroller extends GetxController {
 //for update todo
   var selectedtodo = Todo().obs;
   var iseditmode = false.obs;
-
-//user loggedin
-  var usertoken = "";
 
   @override
   void onInit() async {
@@ -58,7 +55,7 @@ class Appcontroller extends GetxController {
 
 //load stored Todos from local DB
   void loadTodos() async {
-    //todos reload
+    //todos load from Local database
     var todos = await Isarserives().getalltodo();
     if (todos.isNotEmpty) {
       todoList.clear();
@@ -148,6 +145,17 @@ class Appcontroller extends GetxController {
     colorindex.value = todo.color.index;
   }
 
+  //clean data vars
+  void cleandata() {
+    //clear text controllers
+    nametextcontroller.clear();
+    discrepitiontextcontroller.clear();
+    //reset controller date & time
+    selecteddate.value = DateTime.now();
+    selectedtime.value = "";
+    colorindex.value = 0;
+  }
+
 //date and time picker
 
 //show date picker
@@ -157,7 +165,7 @@ class Appcontroller extends GetxController {
       initialDate: DateTime.now(),
       firstDate: DateTime(2000),
       lastDate: DateTime(2025),
-      initialEntryMode: DatePickerEntryMode.input,
+      initialEntryMode: DatePickerEntryMode.calendar,
       helpText: "select task date",
       errorFormatText: "enter a valid date,please",
       fieldLabelText: "when would you like to start",
@@ -203,6 +211,14 @@ class Appcontroller extends GetxController {
           '${packedtime.hour.toString().padLeft(2, '0')}:${packedtime.minute.toString().padLeft(2, '0')}';
     }
   }
+
+//date diff
+  int datediff(DateTime from, DateTime to) {
+    from = DateTime(from.year, from.month, from.day);
+    to = DateTime(to.year, to.month, to.day);
+    return (to.difference(from).inSeconds).round();
+  }
+
 //user management
 
   //handle login:

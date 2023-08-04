@@ -71,7 +71,7 @@ class _LoginFormState extends State<LoginForm> {
                 child: TextFormField(
                   controller: _emailcontroller,
                   style: TextStyle(
-                    fontSize: 12.sp,
+                    fontSize: 14.sp,
                     color: Colors.black,
                   ),
                   autofocus: false,
@@ -85,7 +85,7 @@ class _LoginFormState extends State<LoginForm> {
                     filled: true,
                     fillColor: const Color.fromARGB(156, 234, 232, 232),
                     contentPadding:
-                        EdgeInsets.only(left: 5.w, bottom: 3.h, top: 3.h),
+                        EdgeInsets.only(left: 5.w, bottom: 2.h, top: 3.h),
                     border: OutlineInputBorder(
                       borderSide: BorderSide.none,
                       borderRadius: BorderRadius.circular(15.sp),
@@ -122,7 +122,7 @@ class _LoginFormState extends State<LoginForm> {
                 child: TextFormField(
                   controller: _passwordController,
                   style: TextStyle(
-                    fontSize: 14.sp,
+                    fontSize: 19.sp,
                     color: Colors.black,
                   ),
                   autofocus: false,
@@ -136,7 +136,7 @@ class _LoginFormState extends State<LoginForm> {
                     filled: true,
                     fillColor: const Color.fromARGB(156, 234, 232, 232),
                     contentPadding:
-                        EdgeInsets.only(left: 5.w, bottom: 3.h, top: 3.h),
+                        EdgeInsets.only(left: 5.w, bottom: 2.h, top: 2.h),
                     border: OutlineInputBorder(
                       borderSide: BorderSide.none,
                       borderRadius: BorderRadius.circular(15.sp),

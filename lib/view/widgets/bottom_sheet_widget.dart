@@ -27,7 +27,7 @@ class BottomSheetWidget extends StatelessWidget {
         children: [
           const TextInputWidget(
               fontSize: 25,
-              fontWeight: FontWeight.bold,
+              fontWeight: FontWeight.w500,
               text: "fliter by color",
               color: Colors.black),
           Row(
@@ -49,7 +49,7 @@ class BottomSheetWidget extends StatelessWidget {
           ),
           const TextInputWidget(
               fontSize: 25,
-              fontWeight: FontWeight.bold,
+              fontWeight: FontWeight.w500,
               text: "fliter by date",
               color: Colors.black),
           Column(
@@ -60,7 +60,7 @@ class BottomSheetWidget extends StatelessWidget {
                 children: [
                   const TextInputWidget(
                       fontSize: 20,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w600,
                       text: "From",
                       color: Colors.blue),
                   AppButton(
@@ -74,7 +74,7 @@ class BottomSheetWidget extends StatelessWidget {
                       }),
                   const TextInputWidget(
                       fontSize: 20,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w600,
                       text: "To",
                       color: Colors.blue),
                 ],

@@ -68,16 +68,16 @@ Widget buildTodoCard({
 
 Column dateandtime(Todo todo, Appcontroller controller) {
   return Column(
-    mainAxisAlignment: MainAxisAlignment.center,
+    mainAxisAlignment: MainAxisAlignment.spaceAround,
     crossAxisAlignment: CrossAxisAlignment.end,
     children: [
       TextInputWidget(
           fontSize: 12.sp,
-          fontWeight: FontWeight.bold,
+          fontWeight: FontWeight.w600,
           text: controller.shortformatdate(todo.date!),
           color: Colors.black),
       TextInputWidget(
-          fontSize: 11.sp,
+          fontSize: 12.sp,
           fontWeight: FontWeight.normal,
           text: todo.time!,
           color: Colors.black),

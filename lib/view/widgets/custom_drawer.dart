@@ -32,12 +32,12 @@ class CustomDrawer extends StatelessWidget {
   bulidmenuitems(BuildContext context) => Column(
         children: [
           Container(
-            margin: EdgeInsets.only(right: 35.w),
-            padding: const EdgeInsets.all(12),
+            margin: EdgeInsets.only(right: 32.w),
+            padding: const EdgeInsets.all(10),
             child: TextInputWidget(
                 fontSize: 25,
-                fontWeight: FontWeight.bold,
-                text: controller.iseditmode.value ? "Update TASK" : "NEW TASK",
+                fontWeight: FontWeight.w500,
+                text: controller.iseditmode.value ? "Update Task" : "NEW TASK",
                 color: Colors.black),
           ),
           Container(
@@ -132,7 +132,9 @@ class CustomDrawer extends StatelessWidget {
                 title: Obx(() => TextInputWidget(
                     fontSize: 19,
                     fontWeight: FontWeight.w200,
-                    text: controller.selectedtime.value.toString(),
+                    text: controller.selectedtime.value.isEmpty
+                        ? "pick a time"
+                        : controller.selectedtime.value,
                     color: Colors.black)),
               ),
             ),
@@ -141,38 +143,66 @@ class CustomDrawer extends StatelessWidget {
                 visible: controller.iseditmode.value == false,
                 child: Container(
                   margin: EdgeInsets.only(right: 30.w),
-                  padding: EdgeInsets.only(top: 4.h),
+                  padding: EdgeInsets.only(top: 3.h),
                   child: Gradientbutton(
                     width: 36.w,
                     height: 7.h,
                     fontsize: 15.sp,
                     onPressed: () async {
-                      //create Tod opject model
-                      final todo = Todo()
-                        ..name = controller.nametextcontroller.text
-                        ..descripion =
-                            controller.discrepitiontextcontroller.text
-                        ..color =
-                            ColorPalette.values[controller.colorindex.value]
-                        ..date = controller.selecteddate.value
-                        ..time = controller.selectedtime.value
-                        ..stuts = StutusType.undone;
+                      //validate date
+                      if (controller.nametextcontroller.text.isEmpty ||
+                          controller.discrepitiontextcontroller.text.isEmpty ||
+                          controller.selectedtime.value.isEmpty) {
+                        Get.snackbar(
+                          "warning",
+                          "some data are missing,please fill your Todo detils",
+                          backgroundGradient: const LinearGradient(
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                            colors: [
+                              Color.fromARGB(251, 5, 25, 239),
+                              Color.fromARGB(255, 103, 15, 111),
+                            ],
+                          ),
+                          colorText: Colors.black,
+                          icon: const Icon(
+                            Icons.warning,
+                            color: Colors.white,
+                          ),
+                          shouldIconPulse: true,
+                          snackPosition: SnackPosition.TOP,
+                          duration: const Duration(milliseconds: 2200),
+                        );
+                      } else {
+                        //create Tod opject model
+                        final todo = Todo()
+                          ..name = controller.nametextcontroller.text
+                          ..descripion =
+                              controller.discrepitiontextcontroller.text
+                          ..color =
+                              ColorPalette.values[controller.colorindex.value]
+                          ..date = controller.selecteddate.value
+                          ..time = controller.selectedtime.value
+                          ..stuts = StutusType.undone;
 
-                      //add todo to local DB
-                      controller.addTodo(todo);
+                        //add todo to local DB
+                        controller.addTodo(todo);
 
-                      //set noitication
-                      await NotificationService.showNotification(
-                          title: "reminder",
-                          body: "your todo ${todo.name} time is soon",
-                          scheduled: true,
-                          interval: 5);
+                        //set noitication
+                        await NotificationService.showNotification(
+                            title: "reminder",
+                            body: "your todo ${todo.name} time is soon",
+                            scheduled: true,
+                            interval: controller.datediff(
+                                // get notification on the deadinle
+                                DateTime.now(),
+                                todo.date!));
 
-                      //clear text controllers
-                      controller.nametextcontroller.clear();
-                      controller.discrepitiontextcontroller.clear();
-                      //finally, get back to main screen
-                      Get.back();
+                        //clean variables
+                        controller.cleandata();
+
+                        Get.back();
+                      }
                     },
                     textvalue: "Add",
                   ),
@@ -220,9 +250,9 @@ class CustomDrawer extends StatelessWidget {
                               controller.selectedtime.value;
                           //update
                           controller.editTodo(controller.selectedtodo.value);
-                          //clean
-                          controller.nametextcontroller.clear();
-                          controller.discrepitiontextcontroller.clear();
+
+                          //clean variables
+                          controller.cleandata();
                           //return to home
                           Get.back();
                         },
