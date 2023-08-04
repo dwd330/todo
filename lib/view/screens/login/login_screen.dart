@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:todo/view/widgets/custom_background.dart';
-import '../../widgets/text_input.dart';
+import 'package:todo/view/widgets/text_input.dart';
 import 'login_form.dart';
 
 class LoginScreen extends StatelessWidget {

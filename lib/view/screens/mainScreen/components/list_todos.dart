@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:todo/logic/controllers/app_controller.dart';
+import 'package:todo/routes/routes.dart';
 import 'package:todo/view/widgets/text_input.dart';
 
-import '../../../../routes/routes.dart';
 import 'build_todo_card.dart';
 
 class ListTodos extends StatelessWidget {

@@ -1,6 +1,5 @@
 import 'package:get/instance_manager.dart';
-
-import '../controllers/app_controller.dart';
+import 'package:todo/logic/controllers/app_controller.dart';
 
 class MainBininding extends Bindings {
   @override

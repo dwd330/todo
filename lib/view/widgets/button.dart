@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_rx/src/rx_typedefs/rx_typedefs.dart';
 import 'package:sizer/sizer.dart';
+import 'package:todo/utils/theme.dart';
 
-import '../../utils/theme.dart';
 import 'text_input.dart';
 
 class AppButton extends StatelessWidget {

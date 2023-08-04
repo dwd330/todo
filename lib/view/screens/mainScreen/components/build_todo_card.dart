@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
-
-import '../../../../database/local_DB/collections/todo.dart';
-import '../../../../logic/controllers/app_controller.dart';
-import '../../../widgets/text_input.dart';
+import 'package:todo/database/local_DB/collections/todo.dart';
+import 'package:todo/logic/controllers/app_controller.dart';
+import 'package:todo/view/widgets/text_input.dart';
 
 Widget buildTodoCard({
   required Todo todo,

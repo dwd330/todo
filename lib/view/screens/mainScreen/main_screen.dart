@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
-import '../../../logic/controllers/app_controller.dart';
-import '../../widgets/custom_flitericon.dart';
-import '../../widgets/custom_drawer.dart';
-import '../../widgets/floating_action_widget.dart';
-import '../../widgets/text_input.dart';
-import '../../widgets/bottom_sheet_widget.dart';
+import 'package:todo/logic/controllers/app_controller.dart';
+import 'package:todo/view/widgets/bottom_sheet_widget.dart';
+import 'package:todo/view/widgets/custom_drawer.dart';
+import 'package:todo/view/widgets/custom_flitericon.dart';
+import 'package:todo/view/widgets/floating_action_widget.dart';
+import 'package:todo/view/widgets/text_input.dart';
+
 import 'components/list_todos.dart';
 
 class MainScreen extends StatefulWidget {

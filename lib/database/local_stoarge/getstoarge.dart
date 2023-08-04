@@ -1,5 +1,5 @@
 import 'package:get_storage/get_storage.dart';
-import '../../utils/constants.dart';
+import 'package:todo/utils/constants.dart';
 
 class GetStorageServices {
   final box = GetStorage();

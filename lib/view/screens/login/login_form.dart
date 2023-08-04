@@ -3,11 +3,10 @@ import 'package:get/get.dart';
 
 import 'package:sizer/sizer.dart';
 import 'package:todo/logic/controllers/app_controller.dart';
-
-import '../../../routes/routes.dart';
-import '../../../utils/theme.dart';
-import '../../widgets/gradient_button.dart';
-import '../../widgets/text_input.dart';
+import 'package:todo/routes/routes.dart';
+import 'package:todo/utils/theme.dart';
+import 'package:todo/view/widgets/gradient_button.dart';
+import 'package:todo/view/widgets/text_input.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({Key? key}) : super(key: key);
