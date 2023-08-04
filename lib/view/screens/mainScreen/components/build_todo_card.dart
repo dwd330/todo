@@ -8,7 +8,7 @@ import '../../../widgets/text_input.dart';
 Widget buildTodoCard({
   required Todo todo,
   required Function() onTap,
-  required Appcontroller mainController,
+  required Appcontroller controller,
 }) {
   return Padding(
     padding: EdgeInsets.symmetric(horizontal: 9.sp, vertical: 4.sp),
@@ -20,7 +20,7 @@ Widget buildTodoCard({
           height: 5.h,
           child: CircleAvatar(
             maxRadius: 9.sp,
-            backgroundColor: mainController.colorslist[todo.color.index],
+            backgroundColor: controller.colorslist[todo.color.index],
           ),
         ),
         subtitle: SizedBox(
@@ -61,13 +61,13 @@ Widget buildTodoCard({
             ),
           ),
         ),
-        trailing: dateandtime(todo),
+        trailing: dateandtime(todo, controller),
       ),
     ),
   );
 }
 
-Column dateandtime(Todo todo) {
+Column dateandtime(Todo todo, Appcontroller controller) {
   return Column(
     mainAxisAlignment: MainAxisAlignment.center,
     crossAxisAlignment: CrossAxisAlignment.end,
@@ -75,7 +75,7 @@ Column dateandtime(Todo todo) {
       TextInputWidget(
           fontSize: 12.sp,
           fontWeight: FontWeight.bold,
-          text: todo.date!.substring(0, 2) + todo.date!.substring(2, 6),
+          text: controller.shortformatdate(todo.date!),
           color: Colors.black),
       TextInputWidget(
           fontSize: 11.sp,

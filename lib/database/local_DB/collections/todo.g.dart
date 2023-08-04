@@ -26,7 +26,7 @@ const TodoSchema = CollectionSchema(
     r'date': PropertySchema(
       id: 1,
       name: r'date',
-      type: IsarType.string,
+      type: IsarType.dateTime,
     ),
     r'descripion': PropertySchema(
       id: 2,
@@ -71,12 +71,6 @@ int _todoEstimateSize(
 ) {
   var bytesCount = offsets.last;
   {
-    final value = object.date;
-    if (value != null) {
-      bytesCount += 3 + value.length * 3;
-    }
-  }
-  {
     final value = object.descripion;
     if (value != null) {
       bytesCount += 3 + value.length * 3;
@@ -104,7 +98,7 @@ void _todoSerialize(
   Map<Type, List<int>> allOffsets,
 ) {
   writer.writeByte(offsets[0], object.color.index);
-  writer.writeString(offsets[1], object.date);
+  writer.writeDateTime(offsets[1], object.date);
   writer.writeString(offsets[2], object.descripion);
   writer.writeString(offsets[3], object.name);
   writer.writeByte(offsets[4], object.stuts.index);
@@ -120,7 +114,7 @@ Todo _todoDeserialize(
   final object = Todo();
   object.color = _TodocolorValueEnumMap[reader.readByteOrNull(offsets[0])] ??
       ColorPalette.pink;
-  object.date = reader.readStringOrNull(offsets[1]);
+  object.date = reader.readDateTimeOrNull(offsets[1]);
   object.descripion = reader.readStringOrNull(offsets[2]);
   object.id = id;
   object.name = reader.readStringOrNull(offsets[3]);
@@ -141,7 +135,7 @@ P _todoDeserializeProp<P>(
       return (_TodocolorValueEnumMap[reader.readByteOrNull(offset)] ??
           ColorPalette.pink) as P;
     case 1:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readDateTimeOrNull(offset)) as P;
     case 2:
       return (reader.readStringOrNull(offset)) as P;
     case 3:
@@ -338,55 +332,46 @@ extension TodoQueryFilter on QueryBuilder<Todo, Todo, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Todo, Todo, QAfterFilterCondition> dateEqualTo(
-    String? value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<Todo, Todo, QAfterFilterCondition> dateEqualTo(DateTime? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'date',
         value: value,
-        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<Todo, Todo, QAfterFilterCondition> dateGreaterThan(
-    String? value, {
+    DateTime? value, {
     bool include = false,
-    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
         property: r'date',
         value: value,
-        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<Todo, Todo, QAfterFilterCondition> dateLessThan(
-    String? value, {
+    DateTime? value, {
     bool include = false,
-    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
         property: r'date',
         value: value,
-        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<Todo, Todo, QAfterFilterCondition> dateBetween(
-    String? lower,
-    String? upper, {
+    DateTime? lower,
+    DateTime? upper, {
     bool includeLower = true,
     bool includeUpper = true,
-    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
@@ -395,73 +380,6 @@ extension TodoQueryFilter on QueryBuilder<Todo, Todo, QFilterCondition> {
         includeLower: includeLower,
         upper: upper,
         includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Todo, Todo, QAfterFilterCondition> dateStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'date',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Todo, Todo, QAfterFilterCondition> dateEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'date',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Todo, Todo, QAfterFilterCondition> dateContains(String value,
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'date',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Todo, Todo, QAfterFilterCondition> dateMatches(String pattern,
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'date',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Todo, Todo, QAfterFilterCondition> dateIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'date',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<Todo, Todo, QAfterFilterCondition> dateIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'date',
-        value: '',
       ));
     });
   }
@@ -1177,10 +1095,9 @@ extension TodoQueryWhereDistinct on QueryBuilder<Todo, Todo, QDistinct> {
     });
   }
 
-  QueryBuilder<Todo, Todo, QDistinct> distinctByDate(
-      {bool caseSensitive = true}) {
+  QueryBuilder<Todo, Todo, QDistinct> distinctByDate() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'date', caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'date');
     });
   }
 
@@ -1225,7 +1142,7 @@ extension TodoQueryProperty on QueryBuilder<Todo, Todo, QQueryProperty> {
     });
   }
 
-  QueryBuilder<Todo, String?, QQueryOperations> dateProperty() {
+  QueryBuilder<Todo, DateTime?, QQueryOperations> dateProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'date');
     });

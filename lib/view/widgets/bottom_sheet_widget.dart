@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 import 'package:todo/logic/controllers/app_controller.dart';
+import 'package:todo/utils/theme.dart';
 import 'package:todo/view/widgets/button.dart';
 import 'package:todo/view/widgets/color_palette_widget.dart';
 import 'package:todo/view/widgets/text_input.dart';
@@ -15,7 +16,7 @@ class BottomSheetWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 50.h,
+      height: 70.h,
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.only(
@@ -29,7 +30,23 @@ class BottomSheetWidget extends StatelessWidget {
               fontWeight: FontWeight.bold,
               text: "fliter by color",
               color: Colors.black),
-          SizedBox(height: 7.h, child: ColorPaletteWidget()),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: 7.h, child: ColorPaletteWidget()),
+              AppButton(
+                  width: 12.w,
+                  height: 5.h,
+                  fontsize: 15,
+                  textvalue: "✔",
+                  onPressed: () {
+                    controller.fliterTodos(
+                        by: "color", filter: controller.colorindex.value);
+                    Get.back();
+                  }),
+            ],
+          ),
           const TextInputWidget(
               fontSize: 25,
               fontWeight: FontWeight.bold,
@@ -38,15 +55,24 @@ class BottomSheetWidget extends StatelessWidget {
           Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              const Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  TextInputWidget(
+                  const TextInputWidget(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                       text: "From",
                       color: Colors.blue),
-                  TextInputWidget(
+                  AppButton(
+                      width: 22.w,
+                      height: 5.h,
+                      fontsize: 13,
+                      textvalue: "Apply",
+                      onPressed: () {
+                        controller.fliterTodos(by: "date");
+                        Get.back();
+                      }),
+                  const TextInputWidget(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                       text: "To",
@@ -56,8 +82,11 @@ class BottomSheetWidget extends StatelessWidget {
               Row(
                 children: [
                   TextButton(
-                    onPressed: () {
-                      controller.pickdate();
+                    onPressed: () async {
+                      final startdate = await controller.selectfliterdate();
+                      if (startdate != null) {
+                        controller.startdate.value = startdate;
+                      }
                     },
                     child: Container(
                       width: 45.w,
@@ -71,14 +100,18 @@ class BottomSheetWidget extends StatelessWidget {
                         title: Obx(() => TextInputWidget(
                             fontSize: 19,
                             fontWeight: FontWeight.w200,
-                            text: controller.selecteddate.value.toString(),
+                            text: controller
+                                .formatdate(controller.startdate.value),
                             color: Colors.black)),
                       ),
                     ),
                   ),
                   TextButton(
-                    onPressed: () {
-                      controller.pickdate();
+                    onPressed: () async {
+                      final enddate = await controller.selectfliterdate();
+                      if (enddate != null) {
+                        controller.enddate.value = enddate;
+                      }
                     },
                     child: Container(
                       width: 45.w,
@@ -92,7 +125,8 @@ class BottomSheetWidget extends StatelessWidget {
                         title: Obx(() => TextInputWidget(
                             fontSize: 19,
                             fontWeight: FontWeight.w200,
-                            text: controller.selecteddate.value.toString(),
+                            text:
+                                controller.formatdate(controller.enddate.value),
                             color: Colors.black)),
                       ),
                     ),
@@ -102,11 +136,13 @@ class BottomSheetWidget extends StatelessWidget {
             ],
           ),
           AppButton(
-              width: 35.w,
+              width: 38.w,
               height: 6.h,
-              fontsize: 19,
-              textvalue: "Apply",
+              fontsize: 16,
+              style: style2,
+              textvalue: "remove all   ✗",
               onPressed: () {
+                controller.fliterTodos(by: "");
                 Get.back();
               }),
         ],

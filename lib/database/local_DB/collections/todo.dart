@@ -7,8 +7,8 @@ class Todo {
   Id id = Isar.autoIncrement;
   String? name;
   String? descripion;
-  String? date;
   String? time;
+  DateTime? date;
   @enumerated
   StutusType stuts = StutusType.undone;
   @enumerated

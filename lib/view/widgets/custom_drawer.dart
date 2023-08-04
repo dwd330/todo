@@ -102,7 +102,7 @@ class CustomDrawer extends StatelessWidget {
                 title: Obx(() => TextInputWidget(
                     fontSize: 19,
                     fontWeight: FontWeight.w200,
-                    text: controller.selecteddate.value.toString(),
+                    text: controller.formatdate(controller.selecteddate.value),
                     color: Colors.black)),
               ),
             ),

@@ -17,9 +17,11 @@ class Appcontroller extends GetxController {
   var fliterList = <Todo>[].obs;
 
   //date and time
-  var selecteddate = "".obs;
+  var selecteddate = DateTime.now().obs;
   var selectedtime = "".obs;
-
+//fliter dates
+  var startdate = DateTime.now().obs;
+  var enddate = DateTime.now().obs;
   //color vars
   var colorindex = 0.obs;
   List<Color> colorslist = [
@@ -52,12 +54,51 @@ class Appcontroller extends GetxController {
   final TextEditingController discrepitiontextcontroller =
       TextEditingController();
 
+//load stored Todos from local DB
   void loadTodos() async {
     //todos reload
     var todos = await Isarserives().getalltodo();
     if (todos.isNotEmpty) {
       todoList.clear();
       todoList.addAll(todos);
+    }
+  }
+
+//fliter Todos
+  void fliterTodos({
+    required var by,
+    var filter,
+  }) {
+    //first make sure fliter list is clear
+    fliterList.clear();
+    //todos reload
+    loadTodos();
+
+//fliter by:
+    switch (by) {
+      case "color":
+        try {
+          fliterList.value = todoList.where((todo) {
+            return todo.color.index == filter;
+          }).toList();
+        } catch (error) {
+          throw ("Error on color flitering");
+        }
+        break;
+      case "date":
+        try {
+          if (startdate.value == enddate.value) {
+            //no need to fliter
+            break;
+          }
+          fliterList.value = todoList.where((todo) {
+            return todo.date!.compareTo(startdate.value) >= 0 &&
+                todo.date!.compareTo(enddate.value) <= 0;
+          }).toList();
+        } catch (error) {
+          throw ("Error on date flitering");
+        }
+        break;
     }
   }
 
@@ -121,10 +162,31 @@ class Appcontroller extends GetxController {
     );
 
     if (packedate != null) {
-      selecteddate.value = DateFormat("d MMM yyyy ").format(packedate);
+      selecteddate.value = packedate;
     }
   }
 
+  Future<DateTime?> selectfliterdate() async {
+    DateTime? packedate = await showDatePicker(
+      context: Get.context!,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2025),
+      initialEntryMode: DatePickerEntryMode.input,
+      helpText: "select task date",
+      errorFormatText: "enter a valid date,please",
+      fieldLabelText: "when would you like to start",
+    );
+
+    if (packedate != null) {
+      return packedate;
+    }
+    return null;
+  }
+
+//date formatter
+  String formatdate(DateTime date) => DateFormat("dd MMM yyyy ").format(date);
+  String shortformatdate(DateTime date) => DateFormat("dd MMM ").format(date);
 //show time picker
   void picktime() async {
     TimeOfDay? packedtime = await showTimePicker(

@@ -43,12 +43,12 @@ flutter:
     - assets/images/
 
   fonts:
-    - family: Tajawal
+    - family: Urbanist
       fonts:
-        - asset: assets/fonts/Tajawal/Tajawal-Regular.ttf
-        - asset: assets/fonts/Tajawal/Tajawal-Bold.ttf
+        - asset: assets/fonts/Urbanist/static/Urbanist-Regular.ttf
+        - asset: assets/fonts/Urbanist/static/Urbanist-SemiBold.ttf
           weight: 700
-        - asset: assets/fonts/Tajawal/Tajawal-Black.ttf
+        - asset: assets/fonts/Urbanist/static/Urbanist-Black.ttf
           weight: 300
 
    

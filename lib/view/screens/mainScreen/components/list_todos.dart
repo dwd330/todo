@@ -50,7 +50,7 @@ class ListTodos extends StatelessWidget {
                           if (controller.fliterList.isEmpty) {
                             return buildTodoCard(
                               todo: controller.todoList[index],
-                              mainController: controller,
+                              controller: controller,
                               onTap: () {
                                 controller.toggleeditmode(true);
                                 controller.settodo(controller.todoList[index]);
@@ -60,7 +60,7 @@ class ListTodos extends StatelessWidget {
                           } else {
                             return buildTodoCard(
                                 todo: controller.fliterList[index],
-                                mainController: controller,
+                                controller: controller,
                                 onTap: () {
                                   controller.toggleeditmode(true);
                                   controller
