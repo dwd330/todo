@@ -4,6 +4,6 @@ import 'package:todo/logic/controllers/app_controller.dart';
 class MainBininding extends Bindings {
   @override
   void dependencies() {
-    Get.put(Appcontroller());
+    Get.put(Appcontroller(), permanent: true);
   }
 }

@@ -166,15 +166,27 @@ class _LoginFormState extends State<LoginForm> {
                       password: _passwordController.text.trim());
 
                   if (login == true) {
-                    Get.offAllNamed(Routes.mainscreen);
+                    Get.offNamed(Routes.mainscreen);
                   } else {
                     Get.snackbar(
                       "error",
                       "incorrect email or passowrd,please try again",
-                      backgroundColor: Colors.red,
-                      colorText: Colors.white,
-                      snackPosition: SnackPosition.BOTTOM,
-                      duration: const Duration(milliseconds: 2000),
+                      backgroundGradient: const LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [
+                          Color.fromARGB(251, 5, 25, 239),
+                          Color.fromARGB(255, 103, 15, 111),
+                        ],
+                      ),
+                      colorText: Colors.black,
+                      icon: const Icon(
+                        Icons.warning,
+                        color: Colors.white,
+                      ),
+                      shouldIconPulse: true,
+                      snackPosition: SnackPosition.TOP,
+                      duration: const Duration(milliseconds: 2200),
                     );
                   }
                 },
