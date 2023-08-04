@@ -17,7 +17,7 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
-  final TextEditingController _username = TextEditingController();
+  final TextEditingController _emailcontroller = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final controller = Get.find<Appcontroller>();
 
@@ -70,7 +70,7 @@ class _LoginFormState extends State<LoginForm> {
               Padding(
                 padding: EdgeInsets.all(15.sp),
                 child: TextFormField(
-                  controller: _username,
+                  controller: _emailcontroller,
                   style: TextStyle(
                     fontSize: 12.sp,
                     color: Colors.black,
@@ -162,18 +162,8 @@ class _LoginFormState extends State<LoginForm> {
                 fontsize: 15.sp,
                 textvalue: "sign in",
                 onPressed: () async {
-                  //test get all users
-                  //   final userslist = await HttpHandler().getusers();
-
-                  //post user
-                  //  print(await HttpHandler().postuser(user));
-
-                  //query input for user if fount => set as current user
-                  //else show error
-                  //if no users => go to dashboard
-
                   final login = await controller.isLoggedIn(
-                      username: _username.text.trim(),
+                      email: _emailcontroller.text.trim(),
                       password: _passwordController.text.trim());
 
                   if (login == true) {
@@ -185,7 +175,7 @@ class _LoginFormState extends State<LoginForm> {
                       backgroundColor: Colors.red,
                       colorText: Colors.white,
                       snackPosition: SnackPosition.BOTTOM,
-                      duration: const Duration(milliseconds: 1000),
+                      duration: const Duration(milliseconds: 2000),
                     );
                   }
                 },
@@ -200,7 +190,7 @@ class _LoginFormState extends State<LoginForm> {
   @override
   void dispose() {
     super.dispose();
-    _username.dispose();
+    _emailcontroller.dispose();
     _passwordController.dispose();
   }
 }

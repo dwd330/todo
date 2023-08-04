@@ -3,49 +3,41 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:todo/database/stoarge/getstoarge.dart';
+import 'package:todo/models/user_model.dart';
 
-import '../../models/user_model.dart';
 import 'config.dart';
 
 class HttpHandler {
   var client = http.Client();
 
-//get all users
-  Future<dynamic> getusers() async {
+  Future<User?> login(String email, String password) async {
     try {
-      final uri = Uri.parse(baseUrl + EndPoints.users);
+      final uri = Uri.parse(baseUrl + EndPoints.login);
       var _header = {"Content-Type": "application/json"};
-      final response = await client.get(uri, headers: _header);
-
-      if (response.statusCode == 200) {
-        //return list of users
-        final userslist = (json.decode(response.body) as List)
-            .map((i) => User.fromJson(i))
-            .toList();
-
-        return userslist;
-      }
-    } catch (err) {
-      return null;
-    } finally {
-      client.close();
-    }
-  }
-
-//post a user
-  Future<dynamic> postuser(User user) async {
-    try {
-      final uri = Uri.parse(baseUrl + EndPoints.users);
-      var _header = {"Content-Type": "application/json"};
-      final _payload = jsonEncode(user.toJson());
+      final _payload = jsonEncode({"email": email, "password": password});
       final response = await client.post(uri, headers: _header, body: _payload);
       if (response.statusCode == 200 || response.statusCode == 201) {
-        return response.body;
+        return userFromJson(response.body);
+      }
+
+      //refresh token
+      else if (response.statusCode == 401) {
+        //refresh token and call getUser again
+        final uri = Uri.parse(baseUrl + EndPoints.refreshtoken);
+        final refreshtoken = GetStorageServices().readusertoken();
+        var _header = {
+          'grant_type': 'refresh_token',
+          'refresh_token': '$refreshtoken'
+        };
+        final response = await client.post(uri, headers: _header);
+        return userFromJson(response.body);
       }
     } catch (err) {
       return null;
     } finally {
       client.close();
     }
+    return null;
   }
 }

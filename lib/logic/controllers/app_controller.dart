@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:todo/database/remote/http_handler.dart';
 import '../../database/local_DB/Isar_services.dart';
 import '../../database/local_DB/collections/todo.dart';
 import '../../database/stoarge/getstoarge.dart';
-import '../../models/user_model.dart';
 
 enum StutusType { done, undone }
 
 enum ColorPalette { pink, cyan, magenta, darkblue, green, yellow }
 
 class Appcontroller extends GetxController {
-  var usertoken = ""; //user loggedin
-  var userList = <User>[].obs;
   var todoList = <Todo>[].obs;
   var fliterList = <Todo>[].obs;
 
@@ -32,9 +30,13 @@ class Appcontroller extends GetxController {
     Colors.green,
     Colors.amber,
   ];
-
+//for update todo
   var selectedtodo = Todo().obs;
   var iseditmode = false.obs;
+
+//user loggedin
+  var usertoken = "";
+
   @override
   void onInit() async {
     super.onInit();
@@ -205,23 +207,15 @@ class Appcontroller extends GetxController {
 
   //handle login:
   Future<bool> isLoggedIn(
-      {required String username, required String password}) async {
-//if userlist is empty return true
-//search with username in userlist:
-//the get the user
-// match the password
-//if it matches then set loggedin to true and save user in usertoken
-    if (userList.isEmpty) return true; //no users yet
-    List<User> result = userList
-        .where((user) {
-          var queryname = user.email.trim();
-          var querypassword = user.password.trim();
-          return ((queryname == username) && (querypassword == password));
-        })
-        .cast<User>()
-        .toList();
-    if (result.isNotEmpty) {
-      GetStorageServices().storeusertoken("token");
+      {required String email, required String password}) async {
+    //check if user already logged in
+    if (GetStorageServices().readusertoken() != null) {
+      return true;
+    }
+    //create new login and save session
+    final user = await HttpHandler().login(email, password);
+    if (user != null) {
+      GetStorageServices().storeusertoken(user.data!.token!);
       return true;
     } else {
       return false;
