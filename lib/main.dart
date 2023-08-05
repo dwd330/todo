@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:sizer/sizer.dart';
+import 'package:todo/services/database/local_stoarge/getstoarge.dart';
 
-import 'database/local_stoarge/getstoarge.dart';
 import 'routes/routes.dart';
-import 'services/notification_services.dart';
+import 'services/notifcation_service/notification_services.dart';
 import 'utils/theme.dart';
 
 // Sets a platform override for desktop to avoid exceptions. See

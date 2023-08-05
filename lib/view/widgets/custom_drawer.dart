@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
-import 'package:todo/database/local_DB/collections/todo.dart';
 import 'package:todo/logic/controllers/app_controller.dart';
-import 'package:todo/services/notification_services.dart';
+import 'package:todo/services/database/local_DB/collections/todo.dart';
+import 'package:todo/services/notifcation_service/notification_services.dart';
 import 'package:todo/utils/theme.dart';
 import 'package:todo/view/widgets/button.dart';
 import 'package:todo/view/widgets/gradient_button.dart';

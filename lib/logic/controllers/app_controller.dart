@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:todo/database/local_DB/collections/todo.dart';
-import 'package:todo/database/local_DB/isar_services.dart';
-import 'package:todo/database/local_stoarge/getstoarge.dart';
-import 'package:todo/database/remote_server/http_handler.dart';
+import 'package:todo/services/database/local_DB/collections/todo.dart';
+import 'package:todo/services/database/local_DB/isar_services.dart';
+import 'package:todo/services/database/local_stoarge/getstoarge.dart';
+import 'package:todo/services/database/remote_server/http_handler.dart';
 
 enum StutusType { done, undone }
 
